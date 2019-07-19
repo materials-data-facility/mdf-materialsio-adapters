@@ -1,0 +1,16 @@
+*.pyc
+*.swp
+*.swo
+*.ipynb_checkpoints
+Untitled*.ipynb
+*.cache*
+
+*.DS_Store
+
+*/build/*
+*/dist/*
+*.egg*
+src/*
+
+*.coverage*
+*.pytest_cache*
