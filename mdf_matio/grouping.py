@@ -1,4 +1,4 @@
-from materials_io.utils import ParseResult
+from materials_io.utils.interface import ParseResult
 from typing import Iterable, List
 from operator import itemgetter
 from itertools import groupby
