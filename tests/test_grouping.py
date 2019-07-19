@@ -1,6 +1,6 @@
 """Test the functions that group files into chunks"""
 
-from mdf_matio.grouping import groupby_directory
+from mdf_matio.grouping import groupby_directory, groupby_file
 from materials_io.utils import ParseResult
 import pytest
 import os
@@ -45,3 +45,16 @@ def test_groupby_direectory(example_files):
     # Check the contents of group #3
     assert len(groups[2]) == 1
     assert groups[2] == [((os.path.join('e', 'a.in'),), 'fake', {})]
+
+
+def test_groupby_file(example_files):
+    groups = list(groupby_file(example_files))
+
+    # Allowing grouping to complete
+    #  Should produce three groups:
+    #   0 and 1, and 1 + 2 share files. So 0, 1, 2 will be grouped
+    #   3 and 4 are their own groups
+    assert len(groups) == 3
+    assert sorted(map(len, groups)) == [1, 1, 3]
+    assert isinstance(groups[0], list)
+    assert isinstance(groups[0][0], tuple)
