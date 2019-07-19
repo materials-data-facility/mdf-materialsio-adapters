@@ -9,8 +9,8 @@ Both MaterialsIO and these adaptors are in early stages of development.
 To use it, first clone this repository and then install the library with pip:
 
 ```bash
-git clone git@github.com:materials-data-facility/mdf-matio.git
-cd mdf-matio
+git clone git@github.com:materials-data-facility/mdf-materialsio-adapters.git
+cd mdf-materialsio-adapters
 pip install -e .
 ```
 
