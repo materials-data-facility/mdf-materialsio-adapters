@@ -10,7 +10,7 @@ version = version_ns['__version__']
 setup(
     name="mdf_matio",
     version=version,
-    packages=find_packages(include=['materials_io*']) + ['materials_io.schemas'],
+    packages=find_packages(),
     install_requires=['mdf_toolbox>=0.4.2', 'stevedore>=1.28.0'],
     include_package_data=True,
 )
