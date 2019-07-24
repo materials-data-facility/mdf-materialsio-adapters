@@ -1,7 +1,7 @@
 """Test the functions that group files into chunks"""
 
 from mdf_matio.grouping import groupby_directory, groupby_file
-from materials_io.utils import ParseResult
+from materials_io.utils.interface import ParseResult
 import pytest
 import os
 
