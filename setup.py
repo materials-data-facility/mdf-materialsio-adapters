@@ -13,4 +13,10 @@ setup(
     packages=find_packages(),
     install_requires=['mdf_toolbox>=0.4.2', 'stevedore>=1.28.0'],
     include_package_data=True,
+    entry_points={
+        'materialsio.adapter': [
+            'dft = mdf_matio.adapters.citrine:PIFDFTAdapter',
+            'generic = mdf_matio.adapters:FileAdapter'
+        ]
+    }
 )
