@@ -9,11 +9,6 @@ class FileAdapter(BaseAdapter):
     """Turns the file information into a list, wraps it inside of a dictionary"""
 
     def transform(self, metadata: dict) -> dict:
-        # Rename `hash` to sha512
-        metadata = dict(metadata)
-        metadata['sha512'] = metadata['hash']
-        del metadata['hash']
-
         # If data type is unknown, say so (MDF requires this field)
         if 'data_type' not in metadata:
             metadata['data_type'] = 'Unknown'

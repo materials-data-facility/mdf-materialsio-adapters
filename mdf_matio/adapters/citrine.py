@@ -31,7 +31,7 @@ class CitrineAdapter(BaseAdapter):
         }
 
     def transform(self, pif: dict) -> dict:
-        # Flatten the pif into smaller reacords
+        # Flatten the pif into smaller records
         pif = pif_to_feedstock(loado(pif))
 
         # Map the records to an MDF field
@@ -72,7 +72,7 @@ class PIFDFTAdapter(CitrineAdapter):
         software = pif['properties'][0]['methods'][0]['software'][0]
         output['origin'] = {'type': 'computation', 'name': software['name']}
         if 'version' in software:
-            output['version'] =  software['version']
+            output['origin']['version'] = software['version']
 
         return output
 
