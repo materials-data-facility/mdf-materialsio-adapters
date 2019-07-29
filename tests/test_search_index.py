@@ -9,4 +9,4 @@ file_dir = os.path.join(os.path.dirname(__file__), '..', 'notebooks', 'example-f
 
 def test_parse():
     records = list(generate_search_index(file_dir, False))
-    assert len(records) == 2
+    assert len(records) == 4
