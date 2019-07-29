@@ -11,7 +11,7 @@ setup(
     name="mdf_matio",
     version=version,
     packages=find_packages(),
-    install_requires=['mdf_toolbox>=0.4.2', 'stevedore>=1.28.0'],
+    install_requires=['pypif_sdk'],
     include_package_data=True,
     entry_points={
         'materialsio.adapter': [
