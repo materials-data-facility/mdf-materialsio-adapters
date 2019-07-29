@@ -93,10 +93,8 @@ def groupby_file(records: Iterable[ParseResult], max_passes=-1) -> Iterable[List
                 yield to_match[1]  # Return the group
             else:
                 # Get the matched entries, and delete them from current groups
-                # TODO: Consider dictionary, deleting from middle of lists is costly
-                matched_ids = slice(*matched_ids)
-                my_matched_groups = current_groups[matched_ids]
-                del current_groups[matched_ids]
+                my_matched_groups = [e for i, e in enumerate(current_groups) if i in matched_ids]
+                current_groups = [e for i, e in enumerate(current_groups) if i not in matched_ids]
 
                 # Merge the matched groups
                 my_records = to_match[1]
