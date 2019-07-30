@@ -1,0 +1,2519 @@
+{
+  "properties": [
+    {
+      "name": "Converged",
+      "scalars": [
+        {
+          "value": true
+        }
+      ],
+      "conditions": [
+        {
+          "name": "XC Functional",
+          "scalars": [
+            {
+              "value": "PAW"
+            }
+          ]
+        },
+        {
+          "name": "Cutoff Energy",
+          "scalars": [
+            {
+              "value": 650.0
+            }
+          ],
+          "units": "eV"
+        },
+        {
+          "name": "k-Points per Reciprocal Atom",
+          "scalars": [
+            {
+              "value": 8192.0
+            }
+          ]
+        },
+        {
+          "name": "Pseudopotentials",
+          "vectors": [
+            [
+              {
+                "value": "Al"
+              },
+              {
+                "value": "Ni"
+              }
+            ]
+          ]
+        }
+      ],
+      "methods": [
+        {
+          "name": "Density Functional Theory",
+          "software": [
+            {
+              "name": "VASP",
+              "version": "5.3.2"
+            }
+          ]
+        }
+      ],
+      "dataType": "COMPUTATIONAL"
+    },
+    {
+      "name": "Total Energy",
+      "scalars": [
+        {
+          "value": -12.19669689
+        }
+      ],
+      "units": "eV",
+      "conditions": [
+        {
+          "name": "XC Functional",
+          "scalars": [
+            {
+              "value": "PAW"
+            }
+          ]
+        },
+        {
+          "name": "Cutoff Energy",
+          "scalars": [
+            {
+              "value": 650.0
+            }
+          ],
+          "units": "eV"
+        },
+        {
+          "name": "k-Points per Reciprocal Atom",
+          "scalars": [
+            {
+              "value": 8192.0
+            }
+          ]
+        },
+        {
+          "name": "Pseudopotentials",
+          "vectors": [
+            [
+              {
+                "value": "Al"
+              },
+              {
+                "value": "Ni"
+              }
+            ]
+          ]
+        }
+      ],
+      "methods": [
+        {
+          "name": "Density Functional Theory",
+          "software": [
+            {
+              "name": "VASP",
+              "version": "5.3.2"
+            }
+          ]
+        }
+      ],
+      "dataType": "COMPUTATIONAL"
+    },
+    {
+      "name": "Band Gap Energy",
+      "scalars": [
+        {
+          "value": 0.0
+        }
+      ],
+      "units": "eV",
+      "conditions": [
+        {
+          "name": "XC Functional",
+          "scalars": [
+            {
+              "value": "PAW"
+            }
+          ]
+        },
+        {
+          "name": "Cutoff Energy",
+          "scalars": [
+            {
+              "value": 650.0
+            }
+          ],
+          "units": "eV"
+        },
+        {
+          "name": "k-Points per Reciprocal Atom",
+          "scalars": [
+            {
+              "value": 8192.0
+            }
+          ]
+        },
+        {
+          "name": "Pseudopotentials",
+          "vectors": [
+            [
+              {
+                "value": "Al"
+              },
+              {
+                "value": "Ni"
+              }
+            ]
+          ]
+        }
+      ],
+      "methods": [
+        {
+          "name": "Density Functional Theory",
+          "software": [
+            {
+              "name": "VASP",
+              "version": "5.3.2"
+            }
+          ]
+        }
+      ],
+      "dataType": "COMPUTATIONAL"
+    },
+    {
+      "name": "Pressure",
+      "scalars": [
+        {
+          "value": 12.96
+        }
+      ],
+      "units": "kbar",
+      "conditions": [
+        {
+          "name": "XC Functional",
+          "scalars": [
+            {
+              "value": "PAW"
+            }
+          ]
+        },
+        {
+          "name": "Cutoff Energy",
+          "scalars": [
+            {
+              "value": 650.0
+            }
+          ],
+          "units": "eV"
+        },
+        {
+          "name": "k-Points per Reciprocal Atom",
+          "scalars": [
+            {
+              "value": 8192.0
+            }
+          ]
+        },
+        {
+          "name": "Pseudopotentials",
+          "vectors": [
+            [
+              {
+                "value": "Al"
+              },
+              {
+                "value": "Ni"
+              }
+            ]
+          ]
+        }
+      ],
+      "methods": [
+        {
+          "name": "Density Functional Theory",
+          "software": [
+            {
+              "name": "VASP",
+              "version": "5.3.2"
+            }
+          ]
+        }
+      ],
+      "dataType": "COMPUTATIONAL"
+    },
+    {
+      "name": "Density of States",
+      "scalars": [
+        {
+          "value": 0.0
+        },
+        {
+          "value": 0.0
+        },
+        {
+          "value": 0.0
+        },
+        {
+          "value": 0.0
+        },
+        {
+          "value": 0.0
+        },
+        {
+          "value": 0.0
+        },
+        {
+          "value": 0.0
+        },
+        {
+          "value": 0.0
+        },
+        {
+          "value": 0.0
+        },
+        {
+          "value": 0.0
+        },
+        {
+          "value": 0.0
+        },
+        {
+          "value": 0.0
+        },
+        {
+          "value": 0.0
+        },
+        {
+          "value": 0.0
+        },
+        {
+          "value": 0.0
+        },
+        {
+          "value": 0.0
+        },
+        {
+          "value": 0.0
+        },
+        {
+          "value": 0.03478
+        },
+        {
+          "value": 0.05886
+        },
+        {
+          "value": 0.08764
+        },
+        {
+          "value": 0.09724
+        },
+        {
+          "value": 0.11268
+        },
+        {
+          "value": 0.12908
+        },
+        {
+          "value": 0.13766
+        },
+        {
+          "value": 0.1478
+        },
+        {
+          "value": 0.15936
+        },
+        {
+          "value": 0.17232
+        },
+        {
+          "value": 0.17986
+        },
+        {
+          "value": 0.18838
+        },
+        {
+          "value": 0.19754
+        },
+        {
+          "value": 0.2076
+        },
+        {
+          "value": 0.2178
+        },
+        {
+          "value": 0.226
+        },
+        {
+          "value": 0.2342
+        },
+        {
+          "value": 0.2422
+        },
+        {
+          "value": 0.2508
+        },
+        {
+          "value": 0.26
+        },
+        {
+          "value": 0.27
+        },
+        {
+          "value": 0.279
+        },
+        {
+          "value": 0.287
+        },
+        {
+          "value": 0.295
+        },
+        {
+          "value": 0.3044
+        },
+        {
+          "value": 0.3142
+        },
+        {
+          "value": 0.3242
+        },
+        {
+          "value": 0.3346
+        },
+        {
+          "value": 0.3448
+        },
+        {
+          "value": 0.3566
+        },
+        {
+          "value": 0.3694
+        },
+        {
+          "value": 0.3834
+        },
+        {
+          "value": 0.3986
+        },
+        {
+          "value": 0.4152
+        },
+        {
+          "value": 0.4358
+        },
+        {
+          "value": 0.4584
+        },
+        {
+          "value": 0.467
+        },
+        {
+          "value": 0.4792
+        },
+        {
+          "value": 0.4932
+        },
+        {
+          "value": 0.5096
+        },
+        {
+          "value": 0.532
+        },
+        {
+          "value": 0.5534
+        },
+        {
+          "value": 0.5688
+        },
+        {
+          "value": 0.6048
+        },
+        {
+          "value": 0.636
+        },
+        {
+          "value": 0.6588
+        },
+        {
+          "value": 0.7102
+        },
+        {
+          "value": 0.7584
+        },
+        {
+          "value": 0.653
+        },
+        {
+          "value": 0.623
+        },
+        {
+          "value": 0.6166
+        },
+        {
+          "value": 0.6248
+        },
+        {
+          "value": 0.6386
+        },
+        {
+          "value": 0.662
+        },
+        {
+          "value": 0.7016
+        },
+        {
+          "value": 0.764
+        },
+        {
+          "value": 0.8292
+        },
+        {
+          "value": 0.9672
+        },
+        {
+          "value": 1.7286
+        },
+        {
+          "value": 2.168
+        },
+        {
+          "value": 1.8826
+        },
+        {
+          "value": 1.599
+        },
+        {
+          "value": 1.438
+        },
+        {
+          "value": 1.568
+        },
+        {
+          "value": 2.43
+        },
+        {
+          "value": 2.408
+        },
+        {
+          "value": 3.588
+        },
+        {
+          "value": 2.932
+        },
+        {
+          "value": 2.742
+        },
+        {
+          "value": 1.9369
+        },
+        {
+          "value": 0.7162999999999999
+        },
+        {
+          "value": 3.57
+        },
+        {
+          "value": 4.31
+        },
+        {
+          "value": 3.242
+        },
+        {
+          "value": 4.466
+        },
+        {
+          "value": 8.83
+        },
+        {
+          "value": 5.792
+        },
+        {
+          "value": 5.176
+        },
+        {
+          "value": 4.054
+        },
+        {
+          "value": 2.89
+        },
+        {
+          "value": 0.8826
+        },
+        {
+          "value": 0.7258
+        },
+        {
+          "value": 0.6234
+        },
+        {
+          "value": 0.527
+        },
+        {
+          "value": 0.3566
+        },
+        {
+          "value": 0.4929
+        },
+        {
+          "value": 0.6586
+        },
+        {
+          "value": 2.662
+        },
+        {
+          "value": 1.5974
+        },
+        {
+          "value": 1.3284
+        },
+        {
+          "value": 1.1026
+        },
+        {
+          "value": 0.9264
+        },
+        {
+          "value": 0.835
+        },
+        {
+          "value": 0.7722
+        },
+        {
+          "value": 0.7046
+        },
+        {
+          "value": 0.6482
+        },
+        {
+          "value": 0.6014
+        },
+        {
+          "value": 0.5484
+        },
+        {
+          "value": 0.5104
+        },
+        {
+          "value": 0.4766
+        },
+        {
+          "value": 0.447
+        },
+        {
+          "value": 0.412
+        },
+        {
+          "value": 0.386
+        },
+        {
+          "value": 0.3554
+        },
+        {
+          "value": 0.2994
+        },
+        {
+          "value": 0.2602
+        },
+        {
+          "value": 0.2648
+        },
+        {
+          "value": 0.309
+        },
+        {
+          "value": 0.356
+        },
+        {
+          "value": 0.3886
+        },
+        {
+          "value": 0.4444
+        },
+        {
+          "value": 0.5766
+        },
+        {
+          "value": 0.6976
+        },
+        {
+          "value": 0.7372
+        },
+        {
+          "value": 0.8022
+        },
+        {
+          "value": 0.8226
+        },
+        {
+          "value": 0.8946
+        },
+        {
+          "value": 0.8652
+        },
+        {
+          "value": 0.8262
+        },
+        {
+          "value": 0.7872
+        },
+        {
+          "value": 0.7788
+        },
+        {
+          "value": 0.8358
+        },
+        {
+          "value": 0.741
+        },
+        {
+          "value": 0.7334
+        },
+        {
+          "value": 0.7944
+        },
+        {
+          "value": 0.7392
+        },
+        {
+          "value": 0.732
+        },
+        {
+          "value": 0.7412
+        },
+        {
+          "value": 0.6984
+        },
+        {
+          "value": 0.7386
+        },
+        {
+          "value": 0.7108
+        },
+        {
+          "value": 0.702
+        },
+        {
+          "value": 0.7744
+        },
+        {
+          "value": 0.7446
+        },
+        {
+          "value": 0.7928
+        },
+        {
+          "value": 0.899
+        },
+        {
+          "value": 0.8272
+        },
+        {
+          "value": 0.8162
+        },
+        {
+          "value": 0.852
+        },
+        {
+          "value": 0.8582
+        },
+        {
+          "value": 0.876
+        },
+        {
+          "value": 0.8782
+        },
+        {
+          "value": 0.891
+        },
+        {
+          "value": 0.8988
+        },
+        {
+          "value": 0.874
+        },
+        {
+          "value": 0.854
+        },
+        {
+          "value": 0.8572
+        },
+        {
+          "value": 0.8518
+        },
+        {
+          "value": 0.8482
+        },
+        {
+          "value": 0.835
+        },
+        {
+          "value": 0.8206
+        },
+        {
+          "value": 0.805
+        },
+        {
+          "value": 0.789
+        },
+        {
+          "value": 0.774
+        },
+        {
+          "value": 0.7588
+        },
+        {
+          "value": 0.753
+        },
+        {
+          "value": 0.7558
+        },
+        {
+          "value": 0.7508
+        },
+        {
+          "value": 0.7328
+        },
+        {
+          "value": 0.7108
+        },
+        {
+          "value": 0.6904
+        },
+        {
+          "value": 0.659
+        },
+        {
+          "value": 0.6614
+        },
+        {
+          "value": 0.677
+        },
+        {
+          "value": 0.7062
+        },
+        {
+          "value": 0.7418
+        },
+        {
+          "value": 0.7946
+        },
+        {
+          "value": 0.878
+        },
+        {
+          "value": 0.983
+        },
+        {
+          "value": 1.0628
+        },
+        {
+          "value": 1.1044
+        },
+        {
+          "value": 1.0998
+        },
+        {
+          "value": 1.0372
+        },
+        {
+          "value": 0.9218
+        },
+        {
+          "value": 0.8526
+        },
+        {
+          "value": 0.801
+        },
+        {
+          "value": 0.7524
+        },
+        {
+          "value": 0.7008
+        },
+        {
+          "value": 0.6692
+        },
+        {
+          "value": 0.6518
+        },
+        {
+          "value": 0.6416
+        },
+        {
+          "value": 0.633
+        },
+        {
+          "value": 0.6276
+        },
+        {
+          "value": 0.6278
+        },
+        {
+          "value": 0.6406
+        },
+        {
+          "value": 0.6662
+        },
+        {
+          "value": 0.6784
+        },
+        {
+          "value": 0.683
+        },
+        {
+          "value": 0.6748
+        },
+        {
+          "value": 0.6804
+        },
+        {
+          "value": 0.755
+        },
+        {
+          "value": 0.7802
+        },
+        {
+          "value": 0.8066
+        },
+        {
+          "value": 0.8212
+        },
+        {
+          "value": 0.8364
+        },
+        {
+          "value": 0.8566
+        },
+        {
+          "value": 0.905
+        },
+        {
+          "value": 0.9088
+        },
+        {
+          "value": 0.8802
+        },
+        {
+          "value": 0.8642
+        },
+        {
+          "value": 0.8472
+        },
+        {
+          "value": 0.8274
+        },
+        {
+          "value": 0.8002
+        },
+        {
+          "value": 0.758
+        },
+        {
+          "value": 0.6998
+        },
+        {
+          "value": 0.7136
+        },
+        {
+          "value": 0.904
+        },
+        {
+          "value": 0.9768
+        },
+        {
+          "value": 1.123
+        },
+        {
+          "value": 1.2014
+        },
+        {
+          "value": 0.9326
+        },
+        {
+          "value": 0.8124
+        },
+        {
+          "value": 0.7132
+        },
+        {
+          "value": 0.6578
+        },
+        {
+          "value": 0.6564
+        },
+        {
+          "value": 0.6472
+        },
+        {
+          "value": 0.6283
+        },
+        {
+          "value": 0.6344000000000001
+        },
+        {
+          "value": 0.6885
+        },
+        {
+          "value": 0.7605999999999999
+        },
+        {
+          "value": 0.8358
+        },
+        {
+          "value": 0.9327000000000001
+        },
+        {
+          "value": 1.0291000000000001
+        },
+        {
+          "value": 1.0882
+        },
+        {
+          "value": 1.0954000000000002
+        },
+        {
+          "value": 1.0880999999999998
+        },
+        {
+          "value": 1.0526
+        },
+        {
+          "value": 0.9804999999999999
+        },
+        {
+          "value": 0.8643000000000001
+        },
+        {
+          "value": 0.8085
+        },
+        {
+          "value": 0.4164
+        },
+        {
+          "value": 0.2998
+        },
+        {
+          "value": 0.2484
+        },
+        {
+          "value": 0.1825
+        },
+        {
+          "value": 0.13319999999999999
+        },
+        {
+          "value": 0.09136
+        },
+        {
+          "value": 0.06556000000000001
+        },
+        {
+          "value": 0.04851
+        },
+        {
+          "value": 0.03922
+        },
+        {
+          "value": 0.030629999999999998
+        },
+        {
+          "value": 0.02239
+        },
+        {
+          "value": 0.016642
+        },
+        {
+          "value": 0.015498000000000001
+        },
+        {
+          "value": 0.01456
+        },
+        {
+          "value": 0.013663
+        },
+        {
+          "value": 0.012806999999999999
+        },
+        {
+          "value": 0.011991
+        },
+        {
+          "value": 0.011218
+        },
+        {
+          "value": 0.010484
+        },
+        {
+          "value": 0.009777000000000001
+        },
+        {
+          "value": 0.009094000000000001
+        },
+        {
+          "value": 0.008437
+        },
+        {
+          "value": 0.007926
+        },
+        {
+          "value": 0.008114
+        },
+        {
+          "value": 0.007155
+        },
+        {
+          "value": 0.006239
+        },
+        {
+          "value": 0.0053679999999999995
+        },
+        {
+          "value": 0.004541
+        },
+        {
+          "value": 0.003758
+        },
+        {
+          "value": 0.003019
+        },
+        {
+          "value": 0.00232
+        },
+        {
+          "value": 0.0016801
+        },
+        {
+          "value": 0.0011435
+        },
+        {
+          "value": 0.0007098
+        },
+        {
+          "value": 0.0003791
+        },
+        {
+          "value": 0.00015119
+        },
+        {
+          "value": 2.624e-05
+        },
+        {
+          "value": 0.0
+        },
+        {
+          "value": 0.0
+        },
+        {
+          "value": 0.0
+        },
+        {
+          "value": 0.0
+        },
+        {
+          "value": 0.0
+        },
+        {
+          "value": 0.0
+        },
+        {
+          "value": 0.0
+        },
+        {
+          "value": 0.0
+        },
+        {
+          "value": 0.0
+        },
+        {
+          "value": 0.0
+        },
+        {
+          "value": 0.0
+        },
+        {
+          "value": 0.0
+        },
+        {
+          "value": 0.0
+        },
+        {
+          "value": 0.0
+        },
+        {
+          "value": 0.0
+        },
+        {
+          "value": 0.0
+        },
+        {
+          "value": 0.0
+        }
+      ],
+      "units": "number of states per unit cell",
+      "conditions": [
+        {
+          "name": "energy",
+          "scalars": [
+            {
+              "value": -3.026
+            },
+            {
+              "value": -2.903
+            },
+            {
+              "value": -2.781
+            },
+            {
+              "value": -2.658
+            },
+            {
+              "value": -2.535
+            },
+            {
+              "value": -2.412
+            },
+            {
+              "value": -2.289
+            },
+            {
+              "value": -2.166
+            },
+            {
+              "value": -2.044
+            },
+            {
+              "value": -1.921
+            },
+            {
+              "value": -1.798
+            },
+            {
+              "value": -1.675
+            },
+            {
+              "value": -1.552
+            },
+            {
+              "value": -1.43
+            },
+            {
+              "value": -1.307
+            },
+            {
+              "value": -1.184
+            },
+            {
+              "value": -1.061
+            },
+            {
+              "value": -0.938
+            },
+            {
+              "value": -0.816
+            },
+            {
+              "value": -0.693
+            },
+            {
+              "value": -0.57
+            },
+            {
+              "value": -0.447
+            },
+            {
+              "value": -0.324
+            },
+            {
+              "value": -0.202
+            },
+            {
+              "value": -0.079
+            },
+            {
+              "value": 0.044
+            },
+            {
+              "value": 0.167
+            },
+            {
+              "value": 0.29
+            },
+            {
+              "value": 0.412
+            },
+            {
+              "value": 0.535
+            },
+            {
+              "value": 0.658
+            },
+            {
+              "value": 0.781
+            },
+            {
+              "value": 0.904
+            },
+            {
+              "value": 1.026
+            },
+            {
+              "value": 1.149
+            },
+            {
+              "value": 1.272
+            },
+            {
+              "value": 1.395
+            },
+            {
+              "value": 1.518
+            },
+            {
+              "value": 1.64
+            },
+            {
+              "value": 1.763
+            },
+            {
+              "value": 1.886
+            },
+            {
+              "value": 2.009
+            },
+            {
+              "value": 2.132
+            },
+            {
+              "value": 2.255
+            },
+            {
+              "value": 2.377
+            },
+            {
+              "value": 2.5
+            },
+            {
+              "value": 2.623
+            },
+            {
+              "value": 2.746
+            },
+            {
+              "value": 2.869
+            },
+            {
+              "value": 2.991
+            },
+            {
+              "value": 3.114
+            },
+            {
+              "value": 3.237
+            },
+            {
+              "value": 3.36
+            },
+            {
+              "value": 3.483
+            },
+            {
+              "value": 3.605
+            },
+            {
+              "value": 3.728
+            },
+            {
+              "value": 3.851
+            },
+            {
+              "value": 3.974
+            },
+            {
+              "value": 4.097
+            },
+            {
+              "value": 4.219
+            },
+            {
+              "value": 4.342
+            },
+            {
+              "value": 4.465
+            },
+            {
+              "value": 4.588
+            },
+            {
+              "value": 4.711
+            },
+            {
+              "value": 4.833
+            },
+            {
+              "value": 4.956
+            },
+            {
+              "value": 5.079
+            },
+            {
+              "value": 5.202
+            },
+            {
+              "value": 5.325
+            },
+            {
+              "value": 5.447
+            },
+            {
+              "value": 5.57
+            },
+            {
+              "value": 5.693
+            },
+            {
+              "value": 5.816
+            },
+            {
+              "value": 5.939
+            },
+            {
+              "value": 6.062
+            },
+            {
+              "value": 6.184
+            },
+            {
+              "value": 6.307
+            },
+            {
+              "value": 6.43
+            },
+            {
+              "value": 6.553
+            },
+            {
+              "value": 6.676
+            },
+            {
+              "value": 6.798
+            },
+            {
+              "value": 6.921
+            },
+            {
+              "value": 7.044
+            },
+            {
+              "value": 7.167
+            },
+            {
+              "value": 7.29
+            },
+            {
+              "value": 7.412
+            },
+            {
+              "value": 7.535
+            },
+            {
+              "value": 7.658
+            },
+            {
+              "value": 7.781
+            },
+            {
+              "value": 7.904
+            },
+            {
+              "value": 8.026
+            },
+            {
+              "value": 8.149
+            },
+            {
+              "value": 8.272
+            },
+            {
+              "value": 8.395
+            },
+            {
+              "value": 8.518
+            },
+            {
+              "value": 8.64
+            },
+            {
+              "value": 8.763
+            },
+            {
+              "value": 8.886
+            },
+            {
+              "value": 9.009
+            },
+            {
+              "value": 9.132
+            },
+            {
+              "value": 9.254
+            },
+            {
+              "value": 9.377
+            },
+            {
+              "value": 9.5
+            },
+            {
+              "value": 9.623
+            },
+            {
+              "value": 9.746
+            },
+            {
+              "value": 9.869
+            },
+            {
+              "value": 9.991
+            },
+            {
+              "value": 10.114
+            },
+            {
+              "value": 10.237
+            },
+            {
+              "value": 10.36
+            },
+            {
+              "value": 10.483
+            },
+            {
+              "value": 10.605
+            },
+            {
+              "value": 10.728
+            },
+            {
+              "value": 10.851
+            },
+            {
+              "value": 10.974
+            },
+            {
+              "value": 11.097
+            },
+            {
+              "value": 11.219
+            },
+            {
+              "value": 11.342
+            },
+            {
+              "value": 11.465
+            },
+            {
+              "value": 11.588
+            },
+            {
+              "value": 11.711
+            },
+            {
+              "value": 11.833
+            },
+            {
+              "value": 11.956
+            },
+            {
+              "value": 12.079
+            },
+            {
+              "value": 12.202
+            },
+            {
+              "value": 12.325
+            },
+            {
+              "value": 12.447
+            },
+            {
+              "value": 12.57
+            },
+            {
+              "value": 12.693
+            },
+            {
+              "value": 12.816
+            },
+            {
+              "value": 12.939
+            },
+            {
+              "value": 13.061
+            },
+            {
+              "value": 13.184
+            },
+            {
+              "value": 13.307
+            },
+            {
+              "value": 13.43
+            },
+            {
+              "value": 13.553
+            },
+            {
+              "value": 13.675
+            },
+            {
+              "value": 13.798
+            },
+            {
+              "value": 13.921
+            },
+            {
+              "value": 14.044
+            },
+            {
+              "value": 14.167
+            },
+            {
+              "value": 14.29
+            },
+            {
+              "value": 14.412
+            },
+            {
+              "value": 14.535
+            },
+            {
+              "value": 14.658
+            },
+            {
+              "value": 14.781
+            },
+            {
+              "value": 14.904
+            },
+            {
+              "value": 15.026
+            },
+            {
+              "value": 15.149
+            },
+            {
+              "value": 15.272
+            },
+            {
+              "value": 15.395
+            },
+            {
+              "value": 15.518
+            },
+            {
+              "value": 15.64
+            },
+            {
+              "value": 15.763
+            },
+            {
+              "value": 15.886
+            },
+            {
+              "value": 16.009
+            },
+            {
+              "value": 16.132
+            },
+            {
+              "value": 16.254
+            },
+            {
+              "value": 16.377
+            },
+            {
+              "value": 16.5
+            },
+            {
+              "value": 16.623
+            },
+            {
+              "value": 16.746
+            },
+            {
+              "value": 16.868
+            },
+            {
+              "value": 16.991
+            },
+            {
+              "value": 17.114
+            },
+            {
+              "value": 17.237
+            },
+            {
+              "value": 17.36
+            },
+            {
+              "value": 17.482
+            },
+            {
+              "value": 17.605
+            },
+            {
+              "value": 17.728
+            },
+            {
+              "value": 17.851
+            },
+            {
+              "value": 17.974
+            },
+            {
+              "value": 18.097
+            },
+            {
+              "value": 18.219
+            },
+            {
+              "value": 18.342
+            },
+            {
+              "value": 18.465
+            },
+            {
+              "value": 18.588
+            },
+            {
+              "value": 18.711
+            },
+            {
+              "value": 18.833
+            },
+            {
+              "value": 18.956
+            },
+            {
+              "value": 19.079
+            },
+            {
+              "value": 19.202
+            },
+            {
+              "value": 19.325
+            },
+            {
+              "value": 19.447
+            },
+            {
+              "value": 19.57
+            },
+            {
+              "value": 19.693
+            },
+            {
+              "value": 19.816
+            },
+            {
+              "value": 19.939
+            },
+            {
+              "value": 20.061
+            },
+            {
+              "value": 20.184
+            },
+            {
+              "value": 20.307
+            },
+            {
+              "value": 20.43
+            },
+            {
+              "value": 20.553
+            },
+            {
+              "value": 20.675
+            },
+            {
+              "value": 20.798
+            },
+            {
+              "value": 20.921
+            },
+            {
+              "value": 21.044
+            },
+            {
+              "value": 21.167
+            },
+            {
+              "value": 21.289
+            },
+            {
+              "value": 21.412
+            },
+            {
+              "value": 21.535
+            },
+            {
+              "value": 21.658
+            },
+            {
+              "value": 21.781
+            },
+            {
+              "value": 21.903
+            },
+            {
+              "value": 22.026
+            },
+            {
+              "value": 22.149
+            },
+            {
+              "value": 22.272
+            },
+            {
+              "value": 22.395
+            },
+            {
+              "value": 22.518
+            },
+            {
+              "value": 22.64
+            },
+            {
+              "value": 22.763
+            },
+            {
+              "value": 22.886
+            },
+            {
+              "value": 23.009
+            },
+            {
+              "value": 23.132
+            },
+            {
+              "value": 23.254
+            },
+            {
+              "value": 23.377
+            },
+            {
+              "value": 23.5
+            },
+            {
+              "value": 23.623
+            },
+            {
+              "value": 23.746
+            },
+            {
+              "value": 23.868
+            },
+            {
+              "value": 23.991
+            },
+            {
+              "value": 24.114
+            },
+            {
+              "value": 24.237
+            },
+            {
+              "value": 24.36
+            },
+            {
+              "value": 24.482
+            },
+            {
+              "value": 24.605
+            },
+            {
+              "value": 24.728
+            },
+            {
+              "value": 24.851
+            },
+            {
+              "value": 24.974
+            },
+            {
+              "value": 25.096
+            },
+            {
+              "value": 25.219
+            },
+            {
+              "value": 25.342
+            },
+            {
+              "value": 25.465
+            },
+            {
+              "value": 25.588
+            },
+            {
+              "value": 25.71
+            },
+            {
+              "value": 25.833
+            },
+            {
+              "value": 25.956
+            },
+            {
+              "value": 26.079
+            },
+            {
+              "value": 26.202
+            },
+            {
+              "value": 26.325
+            },
+            {
+              "value": 26.447
+            },
+            {
+              "value": 26.57
+            },
+            {
+              "value": 26.693
+            },
+            {
+              "value": 26.816
+            },
+            {
+              "value": 26.939
+            },
+            {
+              "value": 27.061
+            },
+            {
+              "value": 27.184
+            },
+            {
+              "value": 27.307
+            },
+            {
+              "value": 27.43
+            },
+            {
+              "value": 27.553
+            },
+            {
+              "value": 27.675
+            },
+            {
+              "value": 27.798
+            },
+            {
+              "value": 27.921
+            },
+            {
+              "value": 28.044
+            },
+            {
+              "value": 28.167
+            },
+            {
+              "value": 28.289
+            },
+            {
+              "value": 28.412
+            },
+            {
+              "value": 28.535
+            },
+            {
+              "value": 28.658
+            },
+            {
+              "value": 28.781
+            },
+            {
+              "value": 28.903
+            },
+            {
+              "value": 29.026
+            },
+            {
+              "value": 29.149
+            },
+            {
+              "value": 29.272
+            },
+            {
+              "value": 29.395
+            },
+            {
+              "value": 29.517
+            },
+            {
+              "value": 29.64
+            },
+            {
+              "value": 29.763
+            },
+            {
+              "value": 29.886
+            },
+            {
+              "value": 30.009
+            },
+            {
+              "value": 30.131
+            },
+            {
+              "value": 30.254
+            },
+            {
+              "value": 30.377
+            },
+            {
+              "value": 30.5
+            },
+            {
+              "value": 30.623
+            },
+            {
+              "value": 30.746
+            },
+            {
+              "value": 30.868
+            },
+            {
+              "value": 30.991
+            },
+            {
+              "value": 31.114
+            },
+            {
+              "value": 31.237
+            },
+            {
+              "value": 31.36
+            },
+            {
+              "value": 31.482
+            },
+            {
+              "value": 31.605
+            },
+            {
+              "value": 31.728
+            },
+            {
+              "value": 31.851
+            },
+            {
+              "value": 31.974
+            },
+            {
+              "value": 32.096
+            },
+            {
+              "value": 32.219
+            },
+            {
+              "value": 32.342
+            },
+            {
+              "value": 32.465
+            },
+            {
+              "value": 32.588
+            },
+            {
+              "value": 32.71
+            },
+            {
+              "value": 32.833
+            },
+            {
+              "value": 32.956
+            },
+            {
+              "value": 33.079
+            },
+            {
+              "value": 33.202
+            },
+            {
+              "value": 33.324
+            },
+            {
+              "value": 33.447
+            },
+            {
+              "value": 33.57
+            },
+            {
+              "value": 33.693
+            },
+            {
+              "value": 33.816
+            }
+          ],
+          "units": "eV"
+        },
+        {
+          "name": "XC Functional",
+          "scalars": [
+            {
+              "value": "PAW"
+            }
+          ]
+        },
+        {
+          "name": "Cutoff Energy",
+          "scalars": [
+            {
+              "value": 650.0
+            }
+          ],
+          "units": "eV"
+        },
+        {
+          "name": "k-Points per Reciprocal Atom",
+          "scalars": [
+            {
+              "value": 8192.0
+            }
+          ]
+        },
+        {
+          "name": "Pseudopotentials",
+          "vectors": [
+            [
+              {
+                "value": "Al"
+              },
+              {
+                "value": "Ni"
+              }
+            ]
+          ]
+        }
+      ],
+      "methods": [
+        {
+          "name": "Density Functional Theory",
+          "software": [
+            {
+              "name": "VASP",
+              "version": "5.3.2"
+            }
+          ]
+        }
+      ],
+      "dataType": "COMPUTATIONAL"
+    },
+    {
+      "name": "Positions",
+      "vectors": [
+        [
+          {
+            "value": 0.0
+          },
+          {
+            "value": 0.0
+          },
+          {
+            "value": 0.0
+          }
+        ],
+        [
+          {
+            "value": 1.41666
+          },
+          {
+            "value": 1.41666
+          },
+          {
+            "value": 1.41666
+          }
+        ]
+      ],
+      "conditions": [
+        {
+          "name": "XC Functional",
+          "scalars": [
+            {
+              "value": "PAW"
+            }
+          ]
+        },
+        {
+          "name": "Cutoff Energy",
+          "scalars": [
+            {
+              "value": 650.0
+            }
+          ],
+          "units": "eV"
+        },
+        {
+          "name": "k-Points per Reciprocal Atom",
+          "scalars": [
+            {
+              "value": 8192.0
+            }
+          ]
+        },
+        {
+          "name": "Pseudopotentials",
+          "vectors": [
+            [
+              {
+                "value": "Al"
+              },
+              {
+                "value": "Ni"
+              }
+            ]
+          ]
+        }
+      ],
+      "methods": [
+        {
+          "name": "Density Functional Theory",
+          "software": [
+            {
+              "name": "VASP",
+              "version": "5.3.2"
+            }
+          ]
+        }
+      ],
+      "dataType": "COMPUTATIONAL"
+    },
+    {
+      "name": "Forces",
+      "vectors": [
+        [
+          {
+            "value": 0.0
+          },
+          {
+            "value": 0.0
+          },
+          {
+            "value": 0.0
+          }
+        ],
+        [
+          {
+            "value": 0.0
+          },
+          {
+            "value": 0.0
+          },
+          {
+            "value": 0.0
+          }
+        ]
+      ],
+      "conditions": [
+        {
+          "name": "positions",
+          "vectors": [
+            [
+              {
+                "value": 0.0
+              },
+              {
+                "value": 0.0
+              },
+              {
+                "value": 0.0
+              }
+            ],
+            [
+              {
+                "value": 1.41666
+              },
+              {
+                "value": 1.41666
+              },
+              {
+                "value": 1.41666
+              }
+            ]
+          ]
+        },
+        {
+          "name": "XC Functional",
+          "scalars": [
+            {
+              "value": "PAW"
+            }
+          ]
+        },
+        {
+          "name": "Cutoff Energy",
+          "scalars": [
+            {
+              "value": 650.0
+            }
+          ],
+          "units": "eV"
+        },
+        {
+          "name": "k-Points per Reciprocal Atom",
+          "scalars": [
+            {
+              "value": 8192.0
+            }
+          ]
+        },
+        {
+          "name": "Pseudopotentials",
+          "vectors": [
+            [
+              {
+                "value": "Al"
+              },
+              {
+                "value": "Ni"
+              }
+            ]
+          ]
+        }
+      ],
+      "methods": [
+        {
+          "name": "Density Functional Theory",
+          "software": [
+            {
+              "name": "VASP",
+              "version": "5.3.2"
+            }
+          ]
+        }
+      ],
+      "dataType": "COMPUTATIONAL"
+    },
+    {
+      "name": "Density",
+      "scalars": [
+        {
+          "value": 6.254804081577618
+        }
+      ],
+      "units": "g/(cm^3)",
+      "conditions": [
+        {
+          "name": "XC Functional",
+          "scalars": [
+            {
+              "value": "PAW"
+            }
+          ]
+        },
+        {
+          "name": "Cutoff Energy",
+          "scalars": [
+            {
+              "value": 650.0
+            }
+          ],
+          "units": "eV"
+        },
+        {
+          "name": "k-Points per Reciprocal Atom",
+          "scalars": [
+            {
+              "value": 8192.0
+            }
+          ]
+        },
+        {
+          "name": "Pseudopotentials",
+          "vectors": [
+            [
+              {
+                "value": "Al"
+              },
+              {
+                "value": "Ni"
+              }
+            ]
+          ]
+        }
+      ],
+      "methods": [
+        {
+          "name": "Density Functional Theory",
+          "software": [
+            {
+              "name": "VASP",
+              "version": "5.3.2"
+            }
+          ]
+        }
+      ],
+      "dataType": "COMPUTATIONAL"
+    },
+    {
+      "name": "Total magnetization",
+      "scalars": [
+        {
+          "value": 2.4e-06
+        }
+      ],
+      "units": "Bohr",
+      "conditions": [
+        {
+          "name": "XC Functional",
+          "scalars": [
+            {
+              "value": "PAW"
+            }
+          ]
+        },
+        {
+          "name": "Cutoff Energy",
+          "scalars": [
+            {
+              "value": 650.0
+            }
+          ],
+          "units": "eV"
+        },
+        {
+          "name": "k-Points per Reciprocal Atom",
+          "scalars": [
+            {
+              "value": 8192.0
+            }
+          ]
+        },
+        {
+          "name": "Pseudopotentials",
+          "vectors": [
+            [
+              {
+                "value": "Al"
+              },
+              {
+                "value": "Ni"
+              }
+            ]
+          ]
+        }
+      ],
+      "methods": [
+        {
+          "name": "Density Functional Theory",
+          "software": [
+            {
+              "name": "VASP",
+              "version": "5.3.2"
+            }
+          ]
+        }
+      ],
+      "dataType": "COMPUTATIONAL"
+    },
+    {
+      "name": "Stresses",
+      "matrices": [
+        [
+          [
+            {
+              "value": 12.96023
+            },
+            {
+              "value": 0.0
+            },
+            {
+              "value": 0.0
+            }
+          ],
+          [
+            {
+              "value": 0.0
+            },
+            {
+              "value": 12.96023
+            },
+            {
+              "value": 0.0
+            }
+          ],
+          [
+            {
+              "value": 0.0
+            },
+            {
+              "value": 0.0
+            },
+            {
+              "value": 12.96023
+            }
+          ]
+        ]
+      ],
+      "units": "kbar",
+      "conditions": [
+        {
+          "name": "XC Functional",
+          "scalars": [
+            {
+              "value": "PAW"
+            }
+          ]
+        },
+        {
+          "name": "Cutoff Energy",
+          "scalars": [
+            {
+              "value": 650.0
+            }
+          ],
+          "units": "eV"
+        },
+        {
+          "name": "k-Points per Reciprocal Atom",
+          "scalars": [
+            {
+              "value": 8192.0
+            }
+          ]
+        },
+        {
+          "name": "Pseudopotentials",
+          "vectors": [
+            [
+              {
+                "value": "Al"
+              },
+              {
+                "value": "Ni"
+              }
+            ]
+          ]
+        }
+      ],
+      "methods": [
+        {
+          "name": "Density Functional Theory",
+          "software": [
+            {
+              "name": "VASP",
+              "version": "5.3.2"
+            }
+          ]
+        }
+      ],
+      "dataType": "COMPUTATIONAL"
+    }
+  ],
+  "category": "system.chemical",
+  "chemicalFormula": "AlNi"
+}

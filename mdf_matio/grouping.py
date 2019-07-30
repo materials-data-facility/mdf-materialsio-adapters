@@ -44,8 +44,6 @@ def groupby_directory(records: Iterable[ParseResult]) -> Iterable[List[ParseResu
 def groupby_file(records: Iterable[ParseResult], max_passes=-1) -> Iterable[List[ParseResult]]:
     """Group together parsing results that reference the same files
 
-    # TODO (wardlt): Talk to @jgaff about desired behavior
-
     Files are grouped in an iterative procedure, which can be costly.
     The number of grouping iterations can be truncated for speed.
 

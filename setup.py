@@ -11,12 +11,13 @@ setup(
     name="mdf_matio",
     version=version,
     packages=find_packages(),
-    install_requires=['pypif_sdk'],
+    install_requires=['pypif_sdk', 'jmespath>=0.9.4'],
     include_package_data=True,
     entry_points={
         'materialsio.adapter': [
             'dft = mdf_matio.adapters.citrine:PIFDFTAdapter',
-            'generic = mdf_matio.adapters:FileAdapter'
+            'generic = mdf_matio.adapters:FileAdapter',
+            'csv = mdf_matio.adapters.mappable:CSVAdapter',
         ]
     }
 )
