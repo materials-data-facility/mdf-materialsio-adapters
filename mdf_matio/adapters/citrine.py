@@ -30,7 +30,7 @@ class CitrineAdapter(BaseAdapter):
             'material': {'elemental_proportion': ('elemental_proportions', dict)},
         }
 
-    def transform(self, pif: dict) -> dict:
+    def transform(self, pif: dict, context=None) -> dict:
         # Flatten the pif into smaller records
         pif = pif_to_feedstock(loado(pif))
 
@@ -65,7 +65,7 @@ class PIFDFTAdapter(CitrineAdapter):
             },
         })
 
-    def transform(self, pif: dict) -> dict:
+    def transform(self, pif: dict, context=None) -> dict:
         output = super().transform(pif)
 
         # Add in the method types

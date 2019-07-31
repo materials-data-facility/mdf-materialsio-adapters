@@ -47,5 +47,6 @@ class CSVAdapter(BaseAdapter):
             for col, key in col_to_mdf.items():
                 if col in record:
                     _add_value(new_record, key, record[col])
-            sub_records.append(new_record)
-        return sub_records
+            if len(new_record) > 0:
+                sub_records.append(new_record)
+        return sub_records if len(sub_records) > 0 else None
