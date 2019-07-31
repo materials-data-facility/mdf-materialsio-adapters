@@ -18,6 +18,10 @@ setup(
             'dft = mdf_matio.adapters.citrine:PIFDFTAdapter',
             'generic = mdf_matio.adapters:FileAdapter',
             'csv = mdf_matio.adapters.mappable:CSVAdapter',
+            'json = mdf_matio.adapters.mappable:JSONAdapter',
+        ],
+        'materialsio.parser': [
+            'json = mdf_matio.parsers.json:JSONParser'
         ]
     }
 )
