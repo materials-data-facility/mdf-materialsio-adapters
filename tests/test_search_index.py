@@ -14,8 +14,9 @@ def test_parse():
 
 def test_parse_with_mapping():
     records = list(generate_search_index(file_dir, False,
-                                         index_options={'csv': {'mapping': {'material.composition': 'composition'}}}))
-    assert len(records) == 7
+                                         index_options={'csv': {'mapping': {'material.composition': 'composition'}},
+                                                        'json': {'mapping': {'material.composition': 'composition'}}}))
+    assert len(records) == 12
     assert all(isinstance(x, dict) for x in records)
 
     # Find the record for the csv directory
@@ -23,3 +24,8 @@ def test_parse_with_mapping():
     csv_merged = [x for x in records if any(my_dir in y['path'] for y in x['files'])][0]
     assert 'material' in csv_merged
     assert 'image' in csv_merged
+
+    # Find the record for the csv directory
+    my_dir = os.path.join('json')
+    json_files = [x for x in records if any(my_dir in y['path'] for y in x['files'])]
+    assert len(json_files) == 5
