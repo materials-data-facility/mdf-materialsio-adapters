@@ -31,6 +31,6 @@ def test_parse_with_mapping():
     assert 'image' in csv_merged
 
     # Find the record for the csv directory
-    my_dir = os.path.join('json')
+    my_dir = 'json' + os.path.sep
     json_files = [x for x in records if any(my_dir in y['path'] for y in x['files'])]
     assert len(json_files) == 5
