@@ -1,4 +1,5 @@
 # Adaptors for MDF and MaterialsIO
+[![Build Status](https://travis-ci.org/materials-data-facility/mdf-materialsio-adapters.svg?branch=master)](https://travis-ci.org/materials-data-facility/mdf-materialsio-adapters)[![Coverage Status](https://coveralls.io/repos/github/materials-data-facility/mdf-materialsio-adapters/badge.svg?branch=master)](https://coveralls.io/github/materials-data-facility/mdf-materialsio-adapters?branch=master)
 
 This repository contains the adaptors and grouping operations needed for the Materials Data Facility
 to use Materials IO. 
