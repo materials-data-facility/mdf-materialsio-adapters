@@ -11,7 +11,7 @@ setup(
     name="mdf_matio",
     version=version,
     packages=find_packages(),
-    install_requires=['pypif_sdk', 'jmespath>=0.9.4'],
+    install_requires=['pypif_sdk', 'jmespath>=0.9.4', 'jsonschema>3'],
     include_package_data=True,
     entry_points={
         'materialsio.adapter': [
