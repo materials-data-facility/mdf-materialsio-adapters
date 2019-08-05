@@ -1,5 +1,6 @@
 """Interfaces to the MaterialsIO parsers for use by the MDF"""
 
+from mdf_matio.version import __version__  # noqa: F401
 from materials_io.utils.interface import (get_available_adapters, ParseResult,
                                           run_all_parsers, get_available_parsers)
 from mdf_matio.grouping import groupby_file, groupby_directory
