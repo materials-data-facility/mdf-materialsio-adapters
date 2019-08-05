@@ -1,1 +1,1 @@
-git+https://github.com/materials-data-facility/materials-io.git#egg=materials_io[all]
+git+https://github.com/materials-data-facility/materialsio.git#egg=materials_io[all]
