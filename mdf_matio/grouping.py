@@ -28,7 +28,7 @@ def _get_directory(group: ParseResult) -> str:
 
 def groupby_directory(records: Iterable[ParseResult]) -> Iterable[List[ParseResult]]:
     """Group parsing results by directory
-    
+
     Args:
         records ([ParseResult])): Iterable of data coming from the parser
     Yields:

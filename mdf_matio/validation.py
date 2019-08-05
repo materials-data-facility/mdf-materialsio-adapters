@@ -1,7 +1,6 @@
 """Tools for validating against MDF schema"""
 
 from jsonschema import Draft7Validator, RefResolver
-import json
 
 
 # Make the schema resolver: Using a module-level variable to leverage RefResolvers' cache

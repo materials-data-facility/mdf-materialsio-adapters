@@ -70,7 +70,8 @@ def _merge_files(parse_results: Iterable[ParseResult]) -> Iterable[ParseResult]:
     return map(_merge_records, groupby_file(parse_results))
 
 
-def _merge_directories(parse_results: Iterable[ParseResult], dirs_to_group: List[str]) -> Iterable[ParseResult]:
+def _merge_directories(parse_results: Iterable[ParseResult], dirs_to_group: List[str])\
+        -> Iterable[ParseResult]:
     """Merge records from user-specified directories
 
     Args:
@@ -117,7 +118,8 @@ def generate_search_index(directory: str, validate_records=True,
     # Get the list of parsers that have adapters defined in this package
     target_parsers = get_mdf_parsers()
     logging.info(f'Detected {len(target_parsers)} parsers: {target_parsers}')
-    missing_parsers = set(get_available_parsers().keys()).difference(target_parsers).difference(['noop'])
+    missing_parsers = set(get_available_parsers().keys()).difference(
+        target_parsers).difference(['noop'])
     if len(missing_parsers) > 0:
         logging.warning(f'{len(missing_parsers)} parsers are not used: {missing_parsers}')
     if exclude_parsers is not None:

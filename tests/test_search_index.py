@@ -13,9 +13,9 @@ def test_parse():
 
 
 def test_parse_with_mapping():
-    records = list(generate_search_index(file_dir, False,
-                                         index_options={'csv': {'mapping': {'material.composition': 'composition'}},
-                                                        'json': {'mapping': {'material.composition': 'composition'}}}))
+    index_options = {'csv': {'mapping': {'material.composition': 'composition'}},
+                     'json': {'mapping': {'material.composition': 'composition'}}}
+    records = list(generate_search_index(file_dir, False, index_options=index_options))
     assert len(records) == 12
     assert all(isinstance(x, dict) for x in records)
 

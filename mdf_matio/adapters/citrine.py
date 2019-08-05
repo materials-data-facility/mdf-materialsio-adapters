@@ -5,7 +5,6 @@ from pypif_sdk.interop.mdf import _to_user_defined as pif_to_feedstock
 from typing import Dict, Tuple, Type
 from mdf_toolbox import dict_merge
 from pypif.pif import loado
-import json
 
 
 class CitrineAdapter(BaseAdapter):

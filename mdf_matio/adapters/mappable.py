@@ -1,7 +1,6 @@
 """Adapters for structured files"""
 from materials_io.adapters.base import BaseAdapter
 from typing import List, Tuple, Union
-from jmespath.exceptions import JMESPathError
 import jmespath
 
 

@@ -47,7 +47,5 @@ def test_ldjson():
     # Test out the mapping
     results = execute_parser('json', [my_file], adapter='json',
                              context={'mapping': {'material.composition': 'composition'}})
-    assert results == [{'material': {'composition': 'NaCl'}}, {'material': {'composition': 'LiFePO4'}}]
-
-
-
+    assert results == [{'material': {'composition': 'NaCl'}},
+                       {'material': {'composition': 'LiFePO4'}}]
