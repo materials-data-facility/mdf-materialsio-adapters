@@ -9,7 +9,8 @@ def test_csv():
     # Only works with mapping
     output = execute_parser('csv', [csv_file], adapter='csv',
                             context={'mapping': {'material.composition': 'composition'}})
-    assert output == [{'material': {'composition': 'NaCl'}}]
+    assert output == [{'material': {'composition': 'NaCl'}},
+                      {'material': {'composition': 'LiFePO4'}}]
 
     # No effect
     assert execute_parser('csv', [csv_file], adapter='csv', context={}) is None

@@ -1,10 +1,15 @@
 """Tests for the key 'make search index' function"""
 
 from mdf_matio import generate_search_index
+from tarfile import TarFile
 import os
 
 
 file_dir = os.path.join(os.path.dirname(__file__), '..', 'notebooks', 'example-files')
+
+# Unpack the VASP calculation
+with TarFile.open(os.path.join(file_dir, 'calc', 'AlNi_static_LDA.tar.gz')) as t:
+    t.extractall(os.path.join(file_dir, 'calc'))
 
 
 def test_parse():

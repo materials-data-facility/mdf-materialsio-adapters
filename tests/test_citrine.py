@@ -18,5 +18,5 @@ def test_pif_dft(example_dft):
     expected = {'material': {'elemental_proportions': {'Al': 1}},
                 'dft': {'converged': True, 'exchange_correlation_functional': 'PAW',
                         'cutoff_energy': 650.0},
-                'origin': {'type': 'computation', 'name': 'VASP'}, 'version': '5.3.2'}
+                'origin': {'type': 'computation', 'name': 'VASP', 'version': '5.3.2'}}
     assert PIFDFTAdapter().transform(example_dft) == expected
