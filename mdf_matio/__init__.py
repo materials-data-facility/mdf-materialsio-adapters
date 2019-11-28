@@ -1,7 +1,7 @@
 """Interfaces to the MaterialsIO parsers for use by the MDF"""
 
 from mdf_matio.version import __version__  # noqa: F401
-from materials_io.utils.interface import (get_available_adapters, ParseResult,
+from materials_io.utils.interface import (get_available_adapters, ParseResult, get_adapter,
                                           run_all_parsers, get_available_parsers)
 from mdf_matio.grouping import groupby_file, groupby_directory
 from mdf_matio.validation import validate_against_mdf_schemas
@@ -10,7 +10,6 @@ from mdf_toolbox import dict_merge
 from jsonschema.exceptions import SchemaError
 from typing import Iterable, Set, List
 from functools import reduce, partial
-from glob import glob
 import logging
 import json
 import os
@@ -103,13 +102,67 @@ def _merge_directories(parse_results: Iterable[ParseResult], dirs_to_group: List
         yield _merge_records(group)
 
 
-def generate_search_index(directory: str, validate_records=True,
+def _call_xtracthub(data_url: str, index_options: dict, target_parsers: Set[str]) -> Iterable[ParseResult]:
+    """Call out to XtractHub to get the metadata and perform the adapting
+
+    Args:
+        data_url (str): Pointer to the location of the data (currently only globus:// supported)  # TODO: HTTPS
+        index_options (dict): Arguments for the parsers. Dictionary of "parser name" mapped to a dictionary which
+            is passed to the `context` option of the associated parser and adapter.
+        target_parsers ([str[): List of the parsers to run
+    Yields:
+        (ParseResult) Individual parsing records
+    """
+
+    # Call to XH
+    # TODO: Make API call with the Globus path, tokens, and desired parsers? [Configuration TBD]
+
+    # Get the list of adapters
+    adapters = get_available_adapters()
+    adapter_map = dict((x, x) for x in target_parsers if x in adapters)
+
+    # Wait for XH or Globus transfer to finish, whatever Tyler thinks is best for working with XH
+    # TODO: Hold until metadata file is on disk
+
+    # Read metadata file and apply adapters
+    # TODO: Tyler is switching to a "individual parser" rather than "call matio" model needed for this loop
+    with open('xtracthub.jsonld', 'r') as fp:  # TODO: Identify correct file name
+        for line in fp:  # TODO: Make this loop parallel with Pool.imap_unordered
+            # File is in JSON-LD format: {'group': [str], 'parser': str, 'metadata'': dict}
+            record = json.loads(line)
+
+            # Adapt the metadata, if needed
+            parser = record['parser']
+            metadata = record['metadata']
+            if parser in adapter_map:
+                # Get the adapter and any context needed for the transformation
+                adapter = get_adapter(parser)
+                context = index_options.get(parser, {})
+
+                # Invoke the adapter
+                try:
+                    metadata = adapter.transform(metadata, context)
+                except Exception:
+                    logger.warning(f'Adapter for {parser} failed')
+                    continue
+                if metadata is None:
+                    continue
+
+            yield ParseResult(record['group'], record['parser'], metadata)
+
+
+# TODO (WardLt): Where does this run? [FuncX? Automate? Next challenge, after running locally and figuring out Auth]
+def generate_search_index(data_url: str, validate_records=True, parse_config=None,
                           exclude_parsers=None, index_options=None) -> Iterable[dict]:
     """Generate a search index from a directory of data
 
     Args:
-        directory (str): Path to a directory to be parsed
+        data_url (str): Location of dataset to be parsed
         validate_records (bool): Whether to validate records against MDF Schemas
+        parse_config (dict): Dictionary of parsing options specific to certain files/directories.
+            Keys must be the path of the file or directory.
+            Values are dictionaries of options for that directory, supported options include:
+                group_by_directory: (bool) Whether to group all subdirectories of this directory as single records
         exclude_parsers ([str]): Names of parsers to exclude
         index_options (dict): Indexing options used by MDF Connect
     Yields:
@@ -127,26 +180,18 @@ def generate_search_index(directory: str, validate_records=True,
         target_parsers.difference_update(exclude_parsers)
         logging.info(f'Excluded {len(exclude_parsers)} parsers: {len(exclude_parsers)}')
 
-    # Find directories with extra parse information
-    parse_config = glob(os.path.join(directory, '**', 'mdf.json'), recursive=True)
-    logging.info(f'Found {len(parse_config)} directories with extra parsing information')
-
     # Add root directory to the target path
     index_options = index_options or {}
-    index_options['generic'] = {'root_dir': directory}
+    index_options['generic'] = {'root_dir': data_url}  # TODO (wardlt): Figure out how this works with Globus URLs
 
     # Run the target parsers with their matching adapters on the directory
-    parse_results = run_all_parsers(directory, include_parsers=list(target_parsers),
-                                    adapter_map='match', parser_context=index_options,
-                                    adapter_context=index_options)
+    parse_results = _call_xtracthub(data_url, index_options, target_parsers)
 
     # Merge by directory in the user-specified directories
     grouped_dirs = []
-    for p in parse_config:
-        with open(p) as fp:
-            cfg = json.load(fp)
-        if cfg.get('parse_by_directory', False):
-            grouped_dirs.append(os.path.abspath(os.path.dirname(p)))
+    for path, cfg in parse_config.items():
+        if cfg.get('group_by_directory', False):
+            grouped_dirs.append(path)
     logging.info(f'Grouping {len(grouped_dirs)} directories')
     parse_results = _merge_directories(parse_results, grouped_dirs)
 
@@ -160,6 +205,7 @@ def generate_search_index(directory: str, validate_records=True,
         metadata = group.metadata if isinstance(group.metadata, list) else [group.metadata]
         # Validate records, but do not halt execution if they fail
         for record in metadata:
+            # TODO (jgaff): Add in the record tweaking
             try:
                 if validate_records:
                     validate_against_mdf_schemas(record)
