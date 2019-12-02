@@ -203,6 +203,32 @@ def generate_search_index(data_url: str, validate_records=True, parse_config=Non
 
         # Loop over all produced records
         metadata = group.metadata if isinstance(group.metadata, list) else [group.metadata]
+        # Validate metadata and tweak into final MDF feedstock format
+        # Will fail if any entry fails validation - no invalid entries can be allowed
+        # TODO list:
+        #   - How should validation failures (which stop processing) be communicated?
+        #   - How should the feedstock be output? (Currently yield-ed, could be written to file)
+        #   - (Future) Should feedstock be sent to Search directly here?
+        #   - utils package from MDF Connect Server?
+        #       - split_source_id()
+        #   - schema_path: MDF schema location, also makes updates easy
+        #   - dataset_metadata: Metadata for dataset entry, will be passed in, no changes needed
+        #   - validation_params: Params for validation, will be passed in, no changes needed
+        source_id = dataset_metadata.get("mdf", {}).get("source_id", "unknown")
+        source_info = utils.split_source_id(source_id)
+        vald = Validator(schema_path=schema_path)
+        # Dataset validation
+        ds_res = vald.start_dataset(dataset_metadata, source_info, validation_params)
+        if not ds_res["success"]:
+            raise ValueError(ds_res["error"])
+        # Record validation
+        for record in metadata:
+            rc_res = vald.add_record(record)
+            if not rc_res["success"]:
+                raise ValueError(rc_res["error"])
+        # Output feedstock (currently yielding)
+        yield from vald.get_finished_dataset()
+        '''
         # Validate records, but do not halt execution if they fail
         for record in metadata:
             # TODO (jgaff): Add in the record tweaking
@@ -212,3 +238,4 @@ def generate_search_index(data_url: str, validate_records=True, parse_config=Non
                 yield record
             except SchemaError:
                 logger.warning(f'{group.group} failed validation. Parsers: {group.parser}')
+        '''
