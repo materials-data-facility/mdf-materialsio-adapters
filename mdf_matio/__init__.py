@@ -164,16 +164,17 @@ def generate_search_index(directory: str, validate_records=True,
         #   - How should validation failures (which stop processing) be communicated?
         #   - How should the feedstock be output? (Currently yield-ed, could be written to file)
         #   - (Future) Should feedstock be sent to Search directly here?
-        #   - utils package from MDF Connect Server?
-        #       - split_source_id()
+        #   - import Validator (where should it live? Toolbox?)
         #   - schema_path: MDF schema location, also makes updates easy
         #   - dataset_metadata: Metadata for dataset entry, will be passed in, no changes needed
         #   - validation_params: Params for validation, will be passed in, no changes needed
+
+        # Probably need source_id in later revision
         source_id = dataset_metadata.get("mdf", {}).get("source_id", "unknown")
-        source_info = utils.split_source_id(source_id)
+
         vald = Validator(schema_path=schema_path)
         # Dataset validation
-        ds_res = vald.start_dataset(dataset_metadata, source_info, validation_params)
+        ds_res = vald.start_dataset(dataset_metadata, validation_params)
         if not ds_res["success"]:
             raise ValueError(ds_res["error"])
         # Record validation
