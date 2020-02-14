@@ -5,7 +5,7 @@ from materials_io.utils.interface import (get_available_adapters, ParseResult, g
                                           run_all_parsers, get_available_parsers)
 from mdf_matio.grouping import groupby_file, groupby_directory
 # from mdf_matio.validation import validate_against_mdf_schemas
-from mdf.matio.validator import Validator
+from mdf_matio.validator import Validator
 from mdf_matio.adapters import noop_parsers
 from mdf_toolbox import dict_merge
 from jsonschema.exceptions import SchemaError
