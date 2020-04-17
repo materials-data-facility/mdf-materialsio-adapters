@@ -1,6 +1,6 @@
-import json
 import os
 
+import jsonschema
 import mdf_toolbox
 
 from materials_io.adapters.base import BaseAdapter
@@ -9,14 +9,44 @@ from materials_io.adapters.base import BaseAdapter
 class GenericMDFAdapter(BaseAdapter):
     """Generic adapter for MDF extractors. Adapts metadata with MDF-format fields present."""
 
-    def __init__(self, schema_path=None):
+    def __init__(self, schema_branch=None, schema_uri=None):
         """Create a GenericMDFAdapter object.
 
         Arguments:
-            schema_path (str): The path to the MDF schema directory or MDF record schema file.
-                    Default None, to set later.
+            schema_branch (str): The branch of the MDF data-schemas Github repository to
+                    download and validate against. Default None, to instead use local files.
+            schema_uri (str): The uri to the MDF schema location. Local and nonlocal locations
+                    are supported. Default None, to use the Github branch instead
+
+        Note:
+            Exactly one of schema_branch and schema_path must be supplied.
         """
-        self.schema_path = schema_path
+        # Check that schema_branch XOR schema_uri is True
+        if not bool(schema_branch) ^ bool(schema_uri):
+            raise ValueError("Exactly one of schema_branch and schema_uri must be supplied.")
+
+        # Generate URI from Github if branch supplied
+        if schema_branch:
+            schema_uri = ("https://raw.githubusercontent.com/materials-data-facility/"
+                          "data-schemas/{}/schemas/".format(schema_branch))
+        # If URI is bare file path, make into URI
+        elif os.path.exists(schema_uri):
+            schema_uri = "{}{}{}".format(
+                                    "file://" if not schema_uri.startswith("file://") else "",
+                                    os.path.abspath(schema_uri),
+                                    "/" if schema_uri.endswith("/") else "")
+        # Fetch record schema with resolver
+        resolver = jsonschema.RefResolver(schema_uri, None)
+        base_schema = resolver.resolve("record.json")[1]
+        # Expand JSONSchema (can provider premade resolver)
+        full_schema = mdf_toolbox.expand_jsonschema(base_schema, resolver=resolver)
+
+        # Turn full MDF schema into self-mapping/automap (mdf.field:mdf.field)
+        # Condense into mdf_field: type, then replace type value with field name
+        self.automap = {}
+        for field in mdf_toolbox.condense_jsonschema(full_schema, include_containers=False,
+                                                     list_items=False).keys():
+            self.automap[field] = field
 
     def transform(self, metadata, context=None):
         """Transform the metadata by filtering non-MDF fields away.
@@ -24,34 +54,15 @@ class GenericMDFAdapter(BaseAdapter):
         Arguments:
             metadata (dict): The metadata to transform.
             context (dict): Additional context for the adapter. Default None.
-                    Fields used:
-                        schema_path (str): The path to the MDF schema directory
-                                or MDF record schema file.
+                    No fields are used/read in this adapter.
 
         Returns:
             dict: The transformed metadata.
         """
         if context is None:
             context = {}
-        schema_path = context.get("schema_path", self.schema_path)
-        if not schema_path:
-            raise ValueError("schema_path must be provided, in context or through __init__().")
-        # Normalize schema_path to point at record.json file (base schema for MDF record)
-        if os.path.isdir(schema_path):
-            schema_path = os.path.join(schema_path, "record.json")
-        if not os.path.exists(schema_path):
-            raise FileNotFoundError("MDF schema file '{}' not found".format(schema_path))
-        # Read and expand MDF schema
-        with open(schema_path) as f:
-            full_schema = mdf_toolbox.expand_jsonschema(json.load(f), os.path.dirname(schema_path))
-        # Turn full MDF schema into self-mapping (mdf.field:mdf.field)
-        # Condense into mdf_field: type, then replace type value with field name
-        automap = {}
-        for field in mdf_toolbox.condense_jsonschema(full_schema, include_containers=False,
-                                                     list_items=False).keys():
-            automap[field] = field
-        # Now use automapping to pull out MDF-format fields in metadata
+        # Use automapping to pull out MDF-format fields in metadata
         # Discard empty values
-        filtered_metadata = mdf_toolbox.translate_json(metadata, automap, na_values=[[], {}, None])
-
+        filtered_metadata = mdf_toolbox.translate_json(metadata, self.automap,
+                                                       na_values=[[], {}, None])
         return filtered_metadata
