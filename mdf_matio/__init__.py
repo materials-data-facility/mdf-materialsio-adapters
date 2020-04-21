@@ -4,7 +4,6 @@ from mdf_matio.version import __version__  # noqa: F401
 from materials_io.utils.interface import (get_available_adapters, ParseResult, get_adapter,
                                           run_all_parsers, get_available_parsers)
 from mdf_matio.grouping import groupby_file, groupby_directory
-# from mdf_matio.validation import validate_against_mdf_schemas
 from mdf_matio.validator import Validator
 from mdf_matio.adapters import noop_parsers
 from mdf_toolbox import dict_merge
