@@ -210,14 +210,14 @@ def generate_search_index(data_url: str, validate_records=True, parse_config=Non
         #   - How should the feedstock be output? (Currently yield-ed, could be written to file)
         #   - (Future) Should feedstock be sent to Search directly here?
         #   - import Validator (where should it live? Toolbox?)
-        #   - schema_path: MDF schema location, also makes updates easy
+        #   - schema_branch: The branch of the data-schemas repo to use (master or dev)
         #   - dataset_metadata: Metadata for dataset entry, will be passed in, no changes needed
         #   - validation_params: Params for validation, will be passed in, no changes needed
 
         # Probably need source_id in later revision
         source_id = dataset_metadata.get("mdf", {}).get("source_id", "unknown")
 
-        vald = Validator(schema_path=schema_path)
+        vald = Validator(schema_branch="master")
         # Dataset validation
         ds_res = vald.start_dataset(dataset_metadata, validation_params)
         if not ds_res["success"]:

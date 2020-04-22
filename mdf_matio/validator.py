@@ -40,14 +40,17 @@ class Validator:
             (success check)
         gen = get_finished_dataset()
     """
-    def __init__(self, schema_path):
+    def __init__(self, schema_branch="master"):
         self.__dataset = None  # Serves as initialized flag
         self.__tempfile = None
         self.__scroll_id = None
         self.__ingest_date = datetime.utcnow().isoformat("T") + "Z"
         self.__indexed_files = []
         self.__finished = None  # Flag - has user called get_finished_dataset() for this dataset?
-        self.__schema_dir = schema_path
+        # self.__schema_dir = schema_path
+        self.ref_resolver = jsonschema.RefResolver("https://raw.githubusercontent.com/materials-"
+                                                   "data-facility/data-schemas/{}/schemas/"
+                                                   .format(schema_branch), None)
 
     def start_dataset(self, ds_md, validation_info=None):
         """Validate a dataset against the MDF schema.
@@ -77,10 +80,13 @@ class Validator:
         self.__base_acl = validation_info.get("base_acl", None)
 
         # Load schema
+        _, schema = self.ref_resolver.resolve("dataset.json")
+        '''
         with open(os.path.join(self.__schema_dir, "dataset.json")) as schema_file:
             schema = json.load(schema_file)
         resolver = jsonschema.RefResolver(base_uri="file://{}/".format(self.__schema_dir),
                                           referrer=schema)
+        '''
 
 #        if not ds_md.get("dc") or not isinstance(ds_md["dc"], dict):
 #            ds_md["dc"] = {}
@@ -124,6 +130,7 @@ class Validator:
 
         # Data
         ds_md["data"] = ds_md.get("data", {})
+        ds_md["data"]["total_size"] = 0
 
         # BLOCK: custom
         # Make all values into strings
@@ -148,7 +155,7 @@ class Validator:
 
         # Validate against schema
         try:
-            jsonschema.validate(ds_md, schema, resolver=resolver)
+            jsonschema.validate(ds_md, schema, resolver=self.ref_resolver)
         except jsonschema.ValidationError as e:
             return {
                 "success": False,
@@ -245,10 +252,13 @@ class Validator:
                 }
 
         # Load schema
+        _, schema = self.ref_resolver.resolve("record.json")
+        '''
         with open(os.path.join(self.__schema_dir, "record.json")) as schema_file:
             schema = json.load(schema_file)
         resolver = jsonschema.RefResolver(base_uri="file://{}/".format(self.__schema_dir),
                                           referrer=schema)
+        '''
 
         # Add any missing blocks
         if not rc_md.get("mdf"):
@@ -293,6 +303,8 @@ class Validator:
         # Add file data to dataset
         if rc_md["files"]:
             self.__indexed_files += rc_md["files"]
+            for f in rc_md["files"]:
+                self.__dataset["data"]["total_size"] += f.get("length", 0)
 
         # BLOCK: material
         # elements
@@ -316,7 +328,7 @@ class Validator:
             list_of_elem.sort()
             # Currently deprecated
             # If any "element" isn't in the periodic table,
-            # the composition is likely not a chemical formula and should not be parsed
+            # the composition is likely not a chemical formula and should not be processed
 #                if all([elem in DICT_OF_ALL_ELEMENTS.values() for elem in list_of_elem]):
 #                    record["elements"] = list_of_elem
 
@@ -348,7 +360,7 @@ class Validator:
 
         # Validate against schema
         try:
-            jsonschema.validate(rc_md, schema, resolver=resolver)
+            jsonschema.validate(rc_md, schema, resolver=self.ref_resolver)
         except jsonschema.ValidationError as e:
             return {
                 "success": False,
