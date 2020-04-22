@@ -7,23 +7,38 @@ from materials_io.adapters.base import BaseAdapter
 
 
 class GenericMDFAdapter(BaseAdapter):
-    """Generic adapter for MDF extractors. Adapts metadata with MDF-format fields present."""
+    """Generic adapter for MDF extractors. Adapts metadata with MDF-format fields present.
 
-    def __init__(self, schema_branch=None, schema_uri=None):
-        """Create a GenericMDFAdapter object.
+    This class's transformation performs two tasks:
+        - Removing all fields that are not in the MDF schema
+        - Removing all fields for which the value is empty (empty list, empty dict, or None)
+
+    Extractors that output MDF-format metadata, such as the MDF-contributed extractors,
+    need very little or no transformation. As MatIO extractors are intended to always
+    be backwards-compatible, with the only changes being additional metadata returned,
+    this base adapter class grants all MDF adapters (subclasses of this adapter)
+    forwards-compatibility by filtering out any additional metadata. This significantly
+    reduces the maintenance burden for MDF adapters.
+
+    All MDF adapters should subclass this adapter, and should call this adapter's transform()
+    to gain forwards-compatibility.
+    """
+
+    def __init__(self, schema_branch="master", schema_uri=None):
+        """Create a GenericMDFAdapter object, using a specified MDF schema.
 
         Arguments:
             schema_branch (str): The branch of the MDF data-schemas Github repository to
-                    download and validate against. Default None, to instead use local files.
+                    download and validate against. Default "master".
             schema_uri (str): The uri to the MDF schema location. Local and nonlocal locations
-                    are supported. Default None, to use the Github branch instead
+                    are supported. Default None, to use the Github branch instead.
 
         Note:
-            Exactly one of schema_branch and schema_path must be supplied.
+            schema_uri supercedes schema_branch - if schema_uri is specified,
+            schema_branch is ignored.
         """
-        # Check that schema_branch XOR schema_uri is True
-        if not bool(schema_branch) ^ bool(schema_uri):
-            raise ValueError("Exactly one of schema_branch and schema_uri must be supplied.")
+        if schema_uri:
+            schema_branch = None
 
         # Generate URI from Github if branch supplied
         if schema_branch:

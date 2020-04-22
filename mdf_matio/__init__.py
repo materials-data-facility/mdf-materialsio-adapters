@@ -195,6 +195,8 @@ def generate_search_index(data_url: str, validate_records=True, parse_config=Non
     logging.info(f'Grouping {len(grouped_dirs)} directories')
     parse_results = _merge_directories(parse_results, grouped_dirs)
 
+    vald = Validator(schema_branch="master")
+
     # Merge records associated with the same file
     for group in _merge_files(parse_results):
         # Skip records that include only generic metadata
@@ -208,7 +210,6 @@ def generate_search_index(data_url: str, validate_records=True, parse_config=Non
         # TODO list:
         #   - How should validation failures (which stop processing) be communicated?
         #   - How should the feedstock be output? (Currently yield-ed, could be written to file)
-        #   - (Future) Should feedstock be sent to Search directly here?
         #   - import Validator (where should it live? Toolbox?)
         #   - schema_branch: The branch of the data-schemas repo to use (master or dev)
         #   - dataset_metadata: Metadata for dataset entry, will be passed in, no changes needed
@@ -217,7 +218,6 @@ def generate_search_index(data_url: str, validate_records=True, parse_config=Non
         # Probably need source_id in later revision
         source_id = dataset_metadata.get("mdf", {}).get("source_id", "unknown")
 
-        vald = Validator(schema_branch="master")
         # Dataset validation
         ds_res = vald.start_dataset(dataset_metadata, validation_params)
         if not ds_res["success"]:
@@ -229,14 +229,3 @@ def generate_search_index(data_url: str, validate_records=True, parse_config=Non
                 raise ValueError(rc_res["error"])
         # Output feedstock (currently yielding)
         yield from vald.get_finished_dataset()
-        '''
-        # Validate records, but do not halt execution if they fail
-        for record in metadata:
-            # TODO (jgaff): Add in the record tweaking
-            try:
-                if validate_records:
-                    validate_against_mdf_schemas(record)
-                yield record
-            except SchemaError:
-                logger.warning(f'{group.group} failed validation. Parsers: {group.parser}')
-        '''

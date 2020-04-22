@@ -81,12 +81,6 @@ class Validator:
 
         # Load schema
         _, schema = self.ref_resolver.resolve("dataset.json")
-        '''
-        with open(os.path.join(self.__schema_dir, "dataset.json")) as schema_file:
-            schema = json.load(schema_file)
-        resolver = jsonschema.RefResolver(base_uri="file://{}/".format(self.__schema_dir),
-                                          referrer=schema)
-        '''
 
 #        if not ds_md.get("dc") or not isinstance(ds_md["dc"], dict):
 #            ds_md["dc"] = {}
@@ -253,12 +247,6 @@ class Validator:
 
         # Load schema
         _, schema = self.ref_resolver.resolve("record.json")
-        '''
-        with open(os.path.join(self.__schema_dir, "record.json")) as schema_file:
-            schema = json.load(schema_file)
-        resolver = jsonschema.RefResolver(base_uri="file://{}/".format(self.__schema_dir),
-                                          referrer=schema)
-        '''
 
         # Add any missing blocks
         if not rc_md.get("mdf"):
