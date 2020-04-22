@@ -3,6 +3,7 @@ from typing import List
 import json
 
 
+# TODO (wardlt): Move this to MatIO
 class JSONParser(BaseSingleFileParser):
     """Parses both JSON and line-delimited JSON files"""
 
