@@ -41,7 +41,8 @@ class MDFValidator():
     such as the metadata returned from a MatIO Extractor that has been run through
     an MDF Adapter.
 
-    Example usage (dataset, validation_info and records have already been defined):
+    Example usage:
+    (Given a dataset and validation info directly from MDF input, and records from Xtract)
 
     ```
     vald_obj = MDFValidator(schema_branch="master")
@@ -82,6 +83,12 @@ class MDFValidator():
         Arguments:
             ds_md (dict): The dataset metadata to validate.
             validation_info (dict): Additional validation configuration.
+                project_blocks (list of str): The allowed "project" blocks. Default None.
+                required_fields (list of str): Additional required fields not present
+                        in the MDF schema. Default None.
+                allowed_nulls (list of str): Fields allowed to be null/empty. Default None.
+                base_acl (list of str): The ACL to set on entries. Default None,
+                        which sets a public ACL.
 
         Yields:
             dict: Validated MDF-format metadata, ready for Search ingestion.
