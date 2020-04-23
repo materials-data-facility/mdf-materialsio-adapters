@@ -1,7 +1,5 @@
 from datetime import datetime
 import json
-import os
-from tempfile import TemporaryFile
 
 import jsonschema
 
@@ -29,49 +27,101 @@ def _remove_nulls(data, skip=None):
         return data
 
 
-class Validator:
-    """Validates MDF feedstock.
+class ValidationError(Exception):
+    """An Exception that indicates some part of the metadata did not validate
+    successfully and should be revised."""
+    # Defined here instead of a separate exceptions.py because
+    # this is a single exception type, explicitly for the Validator
+    pass
 
-    Flow:
-        start_dataset(dataset_metadata)
-        (check if returned success)
-        for record in records:
-            add_record(record)
-            (success check)
-        gen = get_finished_dataset()
+
+class MDFValidator():
+    """Validates MDF feedstock.
+    To use this tool, you must have properly-formatted MDF metadata,
+    such as the metadata returned from a MatIO Extractor that has been run through
+    an MDF Adapter.
+
+    Example usage (dataset, validation_info and records have already been defined):
+
+    ```
+    vald_obj = MDFValidator(schema_branch="master")
+    vald_gen = vald_obj.validate_mdf_dataset(dataset, validation_info)
+    dataset_entry = next(vald_gen)
+    record_entries = []
+    for r in records:
+        record_entry = vald_gen.send(r)
+        record.entries.append(record_entry)
+    vald_gen.send(None)
+    ```
     """
     def __init__(self, schema_branch="master"):
-        self.__dataset = None  # Serves as initialized flag
-        self.__tempfile = None
+        """Create an MDFValidator.
+
+        Arguments:
+            schema_branch (str): The GitHub branch of the MDF schema to use in validation.
+                    See https://github.com/materials-data-facility/data-schemas
+        """
+        self.__dataset = None
         self.__scroll_id = None
         self.__ingest_date = datetime.utcnow().isoformat("T") + "Z"
         self.__indexed_files = []
-        self.__finished = None  # Flag - has user called get_finished_dataset() for this dataset?
-        # self.__schema_dir = schema_path
         self.ref_resolver = jsonschema.RefResolver("https://raw.githubusercontent.com/materials-"
                                                    "data-facility/data-schemas/{}/schemas/"
                                                    .format(schema_branch), None)
 
-    def start_dataset(self, ds_md, validation_info=None):
-        """Validate a dataset against the MDF schema.
+    def validate_mdf_dataset(self, ds_md, validation_info=None):
+        """Begin validating a new dataset against the MDF schema.
+
+        This function is a generator. You must initialize it with the following arguments,
+        and then use `.send()` to send in single records to validate.
+        The first yield value is the validated dataset entry.
+        When you .send() a record, the yield value is the validated record.
+        After you are finished sending records, you may send None to end the generator.
+        Every record intended for MDF must be validated through this method.
 
         Arguments:
-        ds_md (dict): The dataset metadata to validate.
-        validation_info (dict): Additional validation configuration.
+            ds_md (dict): The dataset metadata to validate.
+            validation_info (dict): Additional validation configuration.
+
+        Yields:
+            dict: Validated MDF-format metadata, ready for Search ingestion.
+                    The first yield value is always the validated dataset entry.
+                    When a record entry (dict) has been sent to the generator,
+                    this will be the validated record entry.
+
+        Accepts via .send():
+            dict: A record to validate.
+            None: Finish validating.
+        """
+        # Validate, save, and yield dataset
+        dataset = self._validate_dataset(ds_md, validation_info)
+        self.__dataset = dataset
+        # Fetch first record
+        record = yield dataset
+        # Process all records the user has
+        while record is not None:
+            record = yield self._validate_record(record)
+        # Yield once more to avoid forcing user to catch StopIteration
+        # Effect is .send(None) returns None, which is logical
+        yield
+
+    def _validate_dataset(self, ds_md, validation_info=None):
+        """Validate a dataset entry.
+        Not intended for calling directly.
+
+        Arguments:
+            ds_md (dict): The dataset metadata to validate.
+            validation_info (dict): Additional validation configuration.
+                project_blocks (list of str): The allowed "project" blocks. Default None.
+                required_fields (list of str): Additional required fields not present
+                        in the MDF schema. Default None.
+                allowed_nulls (list of str): Fields allowed to be null/empty. Default None.
+                base_acl (list of str): The ACL to set on entries. Default None,
+                        which sets a public ACL.
 
         Returns:
-        dict: success (bool): True on success, False on failure
-            If success is False:
-              error (str): A short message about the error.
-              details (str): The full jsonschema error message.
+            dict: The validated dataset entry.
         """
-        if self.__dataset is not None:
-            return {
-                "success": False,
-                "error": "Dataset validation already in progress."
-                }
-        self.__finished = False
-
         if validation_info is None:
             validation_info = {}
         self.__project_blocks = validation_info.get("project_blocks", None)
@@ -82,12 +132,12 @@ class Validator:
         # Load schema
         _, schema = self.ref_resolver.resolve("dataset.json")
 
-#        if not ds_md.get("dc") or not isinstance(ds_md["dc"], dict):
-#            ds_md["dc"] = {}
+        # if not ds_md.get("dc") or not isinstance(ds_md["dc"], dict):
+        #    ds_md["dc"] = {}
         if not ds_md.get("mdf") or not isinstance(ds_md["mdf"], dict):
             ds_md["mdf"] = {}
-#        if not ds_md.get("mrr") or not isinstance(ds_md["mrr"], dict):
-#            ds_md["mrr"] = {}
+        # if not ds_md.get("mrr") or not isinstance(ds_md["mrr"], dict):
+        #     ds_md["mrr"] = {}
 
         # Add fields
         # BLOCK: dc
@@ -138,11 +188,8 @@ class Validator:
         try:
             json.dumps(ds_md, allow_nan=False)
         except (ValueError, json.JSONDecodeError) as e:
-            return {
-                "success": False,
-                "error": "Invalid dataset JSON: {}".format(str(e)),
-                "details": repr(e)
-            }
+            raise ValidationError("Dataset metadata is not valid JSON: {}"
+                                  .format(str(e))) from e
 
         # Remove null/None values
         ds_md = _remove_nulls(ds_md, self.__allowed_nulls)
@@ -151,21 +198,14 @@ class Validator:
         try:
             jsonschema.validate(ds_md, schema, resolver=self.ref_resolver)
         except jsonschema.ValidationError as e:
-            return {
-                "success": False,
-                "error": "Invalid dataset metadata: " + str(e).split("\n")[0],
-                "details": str(e)
-            }
+            raise ValidationError("Invalid dataset metadata: {}"
+                                  .format(str(e).split("\n")[0])) from e
 
         # Check projects blocks allowed
         # If no blocks, disallow projects
         if not self.__project_blocks:
             if ds_md.get("projects"):
-                return {
-                    "success": False,
-                    "error": "Unauthorized project metadata: No projects allowed",
-                    "details": "'project' block not allowed: '{}'".format(ds_md)
-                }
+                raise ValidationError("Unauthorized project metadata: No projects allowed")
         # If some project blocks allowed, check that only allowed ones are present
         else:
             unauthorized = []
@@ -173,14 +213,8 @@ class Validator:
                 if proj not in self.__project_blocks:
                     unauthorized.append(proj)
             if unauthorized:
-                return {
-                    "success": False,
-                    "error": ("Unauthorized project metadata: '{}' not allowed"
-                              .format(unauthorized)),
-                    "details": ("Not authorized for project block(s) '{}' in '{}'. "
-                                "The dataset is not in an allowed organization."
-                                .format(unauthorized, ds_md))
-                }
+                raise ValidationError("Unauthorized project metadata: '{}' not allowed"
+                                      .format(unauthorized))
 
         # Validate required fields
         # TODO: How should this validation be done?
@@ -202,48 +236,25 @@ class Validator:
                         missing.append(field_path)
                         break
             if missing:
-                return {
-                    "success": False,
-                    "error": "Missing organization metadata: '{}' are required".format(missing),
-                    "details": ("Required fields are '{}', but '{}' are missing"
-                                .format(self.__required_fields, missing))
-                }
+                raise ValidationError("Missing organization metadata: '{}' are required"
+                                      .format(missing))
 
-        # Create temporary file for records
-        self.__tempfile = TemporaryFile(mode="w+")
+        # Ensure dataset JSON-sanitized before return
+        return json.loads(json.dumps(ds_md))
 
-        # Save dataset metadata
-        # Also ensure metadata is JSON-serializable
-        self.__dataset = json.loads(json.dumps(ds_md))
-
-        # Return results
-        return {
-            "success": True
-            }
-
-    def add_record(self, rc_md):
-        """Validate a record against the MDF schema.
+    def _validate_record(self, rc_md):
+        """Process and validate a record against the MDF schema.
+        Not intented to be called directly.
 
         Arguments:
-        rc_md (dict): The record metadata to validate.
+            rc_md (dict): The record metadata to validate.
 
         Returns:
-        dict: success (bool): True on success, False on failure
-            If success is False:
-              error (str): A short message about the error.
-              details (str): The full jsonschema error message.
+            dict: The validated record.
         """
-        if self.__finished:
-            return {
-                "success": False,
-                "error": ("Dataset has been finished by calling get_finished_dataset(),"
-                          " and no more records may be entered.")
-                }
-        elif not self.__dataset:
-            return {
-                "success": False,
-                "error": "Dataset not started."
-                }
+        if not self.__dataset:
+            raise ValidationError("Dataset not started. Records cannot be validated without "
+                                  "a dataset. Call .validate_mdf_dataset() instead.")
 
         # Load schema
         _, schema = self.ref_resolver.resolve("record.json")
@@ -298,10 +309,6 @@ class Validator:
         # elements
         if rc_md["material"].get("composition"):
             composition = rc_md["material"]["composition"].replace("and", "")
-            # Currently deprecated
-#                for element in DICT_OF_ALL_ELEMENTS.keys():
-#                    composition = re.sub("(?i)"+element,
-#                                         DICT_OF_ALL_ELEMENTS[element], composition)
             str_of_elem = ""
             for char in list(composition):
                 if char.isupper():  # Start of new element symbol
@@ -314,11 +321,6 @@ class Validator:
             list_of_elem = list(set(str_of_elem.split()))
             # Ensure deterministic results
             list_of_elem.sort()
-            # Currently deprecated
-            # If any "element" isn't in the periodic table,
-            # the composition is likely not a chemical formula and should not be processed
-#                if all([elem in DICT_OF_ALL_ELEMENTS.values() for elem in list_of_elem]):
-#                    record["elements"] = list_of_elem
 
             rc_md["material"]["elements"] = list_of_elem
         elif rc_md["material"].get("elemental_proportions"):
@@ -337,11 +339,7 @@ class Validator:
         try:
             json.dumps(rc_md, allow_nan=False)
         except (ValueError, json.JSONDecodeError) as e:
-            return {
-                "success": False,
-                "error": "Invalid record JSON: {}".format(str(e)),
-                "details": repr(e)
-                }
+            raise ValidationError("Record is not valid JSON: {}".format(str(e))) from e
 
         # Remove null/None values
         rc_md = _remove_nulls(rc_md, self.__allowed_nulls)
@@ -350,48 +348,8 @@ class Validator:
         try:
             jsonschema.validate(rc_md, schema, resolver=self.ref_resolver)
         except jsonschema.ValidationError as e:
-            return {
-                "success": False,
-                "error": "Invalid record metadata: " + str(e).split("\n")[0],
-                "details": str(e)
-                }
-
-        # Write out to file
-        json.dump(rc_md, self.__tempfile)
-        self.__tempfile.write("\n")
+            raise ValidationError("Invalid record metadata: {}"
+                                  .format(str(e).split("\n")[0])) from e
 
         # Return results
-        return {
-            "success": True
-            }
-
-    def get_finished_dataset(self):
-        """Retrieve finished dataset, in a generator."""
-        if self.__dataset is None:
-            raise ValueError("Dataset not started")
-        elif self.__finished:
-            raise ValueError("Dataset already finished")
-
-        self.__indexed_files = []
-        self.__finished = True
-
-        self.__tempfile.seek(0)
-        yield self.__dataset
-        for line in self.__tempfile:
-            yield json.loads(line)
-
-        self.__tempfile.close()
-        self.__dataset = None
-        return
-
-    def status(self):
-        if self.__finished:
-            if self.__dataset:
-                return "Dataset finished but not fully read out."
-            else:
-                return "Dataset fully read out."
-        else:
-            if self.__dataset:
-                return "Dataset started and still accepting records."
-            else:
-                return "Dataset not started."
+        return rc_md
