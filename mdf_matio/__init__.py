@@ -145,7 +145,17 @@ def generate_search_index(data_url: str, validate_records=True, parse_config=Non
     logging.info(f'Grouping {len(grouped_dirs)} directories')
     parse_results = _merge_directories(parse_results, grouped_dirs)
 
-    vald = Validator(schema_branch="master")
+    # TODO: Add these variables as arguments or fetch in other way
+    dataset_metadata = None   # Provided by MDF directly
+    validation_params = None  # Provided by MDF directly
+    schema_branch = "master"  # Must be configurable, can be provided by MDF directly
+
+    # Validate metadata and tweak into final MDF feedstock format
+    # Will fail if any entry fails validation - no invalid entries can be allowed
+    vald = Validator(schema_branch=schema_branch)
+    vald_gen = vald.validate_mdf_dataset(dataset_metadata, validation_params)
+    # Yield validated dataset entry
+    yield next(vald_gen)
 
     # Merge records associated with the same file
     for group in _merge_files(parse_results):
@@ -155,27 +165,9 @@ def generate_search_index(data_url: str, validate_records=True, parse_config=Non
 
         # Loop over all produced records
         metadata = group.metadata if isinstance(group.metadata, list) else [group.metadata]
-        # Validate metadata and tweak into final MDF feedstock format
-        # Will fail if any entry fails validation - no invalid entries can be allowed
-        # TODO list:
-        #   - How should validation failures (which stop processing) be communicated?
-        #   - How should the feedstock be output? (Currently yield-ed, could be written to file)
-        #   - import Validator (where should it live? Toolbox?)
-        #   - schema_branch: The branch of the data-schemas repo to use (master or dev)
-        #   - dataset_metadata: Metadata for dataset entry, will be passed in, no changes needed
-        #   - validation_params: Params for validation, will be passed in, no changes needed
 
-        # Probably need source_id in later revision
-        source_id = dataset_metadata.get("mdf", {}).get("source_id", "unknown")
-
-        # Dataset validation
-        ds_res = vald.start_dataset(dataset_metadata, validation_params)
-        if not ds_res["success"]:
-            raise ValueError(ds_res["error"])
         # Record validation
         for record in metadata:
-            rc_res = vald.add_record(record)
-            if not rc_res["success"]:
-                raise ValueError(rc_res["error"])
-        # Output feedstock (currently yielding)
-        yield from vald.get_finished_dataset()
+            yield vald_gen.send(record)
+
+    vald_gen.send(None)
