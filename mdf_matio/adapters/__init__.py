@@ -2,9 +2,6 @@
 from materials_io.adapters.base import BaseAdapter
 import os
 
-noop_parsers = ['image', 'em']
-"""List of parsers that already produce information in the MDF formta"""
-
 
 class FileAdapter(BaseAdapter):
     """Turns the file information into a list, wraps it inside of a dictionary"""

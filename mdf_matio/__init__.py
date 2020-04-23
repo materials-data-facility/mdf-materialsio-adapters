@@ -4,7 +4,6 @@ from mdf_matio.version import __version__  # noqa: F401
 from materials_io.utils.interface import get_available_adapters, ParseResult, get_available_parsers
 from mdf_matio.grouping import groupby_file, groupby_directory
 from mdf_matio.validator import Validator
-from mdf_matio.adapters import noop_parsers
 from mdf_toolbox import dict_merge
 from typing import Iterable, Set, List
 from functools import reduce, partial
@@ -24,8 +23,8 @@ def get_mdf_parsers() -> Set[str]:
     Returns:
         ([str]): Names of parsers that are compatible with the MDF
     """
-    return set(noop_parsers + [name for name, info in get_available_adapters().items()
-                               if info['class'].startswith('mdf_matio')])
+    return set([name for name, info in get_available_adapters().items()
+                if info['class'].startswith('mdf_matio')])
 
 
 def _merge_records(group: List[ParseResult]):
@@ -121,7 +120,7 @@ def generate_search_index(data_url: str, validate_records=True, parse_config=Non
     target_parsers = get_mdf_parsers()
     logging.info(f'Detected {len(target_parsers)} parsers: {target_parsers}')
     missing_parsers = set(get_available_parsers().keys()).difference(
-        target_parsers).difference(['noop'])
+        target_parsers)
     if len(missing_parsers) > 0:
         logging.warning(f'{len(missing_parsers)} parsers are not used: {missing_parsers}')
     if exclude_parsers is not None:
