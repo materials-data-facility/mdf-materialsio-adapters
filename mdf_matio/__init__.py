@@ -1,17 +1,14 @@
 """Interfaces to the MaterialsIO parsers for use by the MDF"""
 
 from mdf_matio.version import __version__  # noqa: F401
-from materials_io.utils.interface import (get_available_adapters, ParseResult, get_adapter,
-                                          run_all_parsers, get_available_parsers)
+from materials_io.utils.interface import get_available_adapters, ParseResult, get_available_parsers
 from mdf_matio.grouping import groupby_file, groupby_directory
 from mdf_matio.validator import Validator
 from mdf_matio.adapters import noop_parsers
 from mdf_toolbox import dict_merge
-from jsonschema.exceptions import SchemaError
 from typing import Iterable, Set, List
 from functools import reduce, partial
 import logging
-import json
 import os
 
 logger = logging.getLogger(__name__)
@@ -102,55 +99,6 @@ def _merge_directories(parse_results: Iterable[ParseResult], dirs_to_group: List
         yield _merge_records(group)
 
 
-def _call_xtracthub(data_url: str, index_options: dict, target_parsers: Set[str]) -> Iterable[ParseResult]:
-    """Call out to XtractHub to get the metadata and perform the adapting
-
-    Args:
-        data_url (str): Pointer to the location of the data (currently only globus:// supported)  # TODO: HTTPS
-        index_options (dict): Arguments for the parsers. Dictionary of "parser name" mapped to a dictionary which
-            is passed to the `context` option of the associated parser and adapter.
-        target_parsers ([str[): List of the parsers to run
-    Yields:
-        (ParseResult) Individual parsing records
-    """
-
-    # Call to XH
-    # TODO: Make API call with the Globus path, tokens, and desired parsers? [Configuration TBD]
-
-    # Get the list of adapters
-    adapters = get_available_adapters()
-    adapter_map = dict((x, x) for x in target_parsers if x in adapters)
-
-    # Wait for XH or Globus transfer to finish, whatever Tyler thinks is best for working with XH
-    # TODO: Hold until metadata file is on disk
-
-    # Read metadata file and apply adapters
-    # TODO: Tyler is switching to a "individual parser" rather than "call matio" model needed for this loop
-    with open('xtracthub.jsonld', 'r') as fp:  # TODO: Identify correct file name
-        for line in fp:  # TODO: Make this loop parallel with Pool.imap_unordered
-            # File is in JSON-LD format: {'group': [str], 'parser': str, 'metadata'': dict}
-            record = json.loads(line)
-
-            # Adapt the metadata, if needed
-            parser = record['parser']
-            metadata = record['metadata']
-            if parser in adapter_map:
-                # Get the adapter and any context needed for the transformation
-                adapter = get_adapter(parser)
-                context = index_options.get(parser, {})
-
-                # Invoke the adapter
-                try:
-                    metadata = adapter.transform(metadata, context)
-                except Exception:
-                    logger.warning(f'Adapter for {parser} failed')
-                    continue
-                if metadata is None:
-                    continue
-
-            yield ParseResult(record['group'], record['parser'], metadata)
-
-
 # TODO (WardLt): Where does this run? [FuncX? Automate? Next challenge, after running locally and figuring out Auth]
 def generate_search_index(data_url: str, validate_records=True, parse_config=None,
                           exclude_parsers=None, index_options=None) -> Iterable[dict]:
@@ -185,7 +133,9 @@ def generate_search_index(data_url: str, validate_records=True, parse_config=Non
     index_options['generic'] = {'root_dir': data_url}  # TODO (wardlt): Figure out how this works with Globus URLs
 
     # Run the target parsers with their matching adapters on the directory
-    parse_results = _call_xtracthub(data_url, index_options, target_parsers)
+    # NOTE: No longer using _call_xtracthub()
+    # TODO: Replace this call
+    # parse_results = _call_xtracthub(data_url, index_options, target_parsers)
 
     # Merge by directory in the user-specified directories
     grouped_dirs = []
