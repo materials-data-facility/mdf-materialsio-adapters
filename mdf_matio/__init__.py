@@ -1,7 +1,8 @@
 """Interfaces to the MaterialsIO parsers for use by the MDF"""
 
 from mdf_matio.version import __version__  # noqa: F401
-from materials_io.utils.interface import get_available_adapters, ParseResult, get_available_parsers
+from materials_io.utils.interface import (get_available_adapters, ParseResult,
+                                          get_available_parsers, run_all_parsers)
 from mdf_matio.grouping import groupby_file, groupby_directory
 from mdf_matio.validator import MDFValidator
 from mdf_toolbox import dict_merge
@@ -98,7 +99,6 @@ def _merge_directories(parse_results: Iterable[ParseResult], dirs_to_group: List
         yield _merge_records(group)
 
 
-# TODO (WardLt): Where does this run? [FuncX? Automate? Next challenge, after running locally and figuring out Auth]
 def generate_search_index(data_url: str, validate_records=True, parse_config=None,
                           exclude_parsers=None, index_options=None) -> Iterable[dict]:
     """Generate a search index from a directory of data
@@ -109,7 +109,8 @@ def generate_search_index(data_url: str, validate_records=True, parse_config=Non
         parse_config (dict): Dictionary of parsing options specific to certain files/directories.
             Keys must be the path of the file or directory.
             Values are dictionaries of options for that directory, supported options include:
-                group_by_directory: (bool) Whether to group all subdirectories of this directory as single records
+                group_by_directory: (bool) Whether to group all subdirectories of this
+                        directory as single records
         exclude_parsers ([str]): Names of parsers to exclude
         index_options (dict): Indexing options used by MDF Connect
     Yields:
@@ -129,13 +130,13 @@ def generate_search_index(data_url: str, validate_records=True, parse_config=Non
 
     # Add root directory to the target path
     index_options = index_options or {}
-    index_options['generic'] = {'root_dir': data_url}  # TODO (wardlt): Figure out how this works with Globus URLs
+    # TODO (wardlt): Figure out how this works with Globus URLs
+    index_options['generic'] = {'root_dir': data_url}
 
     # Run the target parsers with their matching adapters on the directory
-    # NOTE: No longer using _call_xtracthub()
-    # TODO: Replace this call
-    # parse_results = _call_xtracthub(data_url, index_options, target_parsers)
-
+    parse_results = run_all_parsers(data_url, include_parsers=list(target_parsers),
+                                    adapter_map='match', parser_context=index_options,
+                                    adapter_context=index_options)
     # Merge by directory in the user-specified directories
     grouped_dirs = []
     for path, cfg in parse_config.items():
