@@ -3,7 +3,7 @@
 from mdf_matio.version import __version__  # noqa: F401
 from materials_io.utils.interface import get_available_adapters, ParseResult, get_available_parsers
 from mdf_matio.grouping import groupby_file, groupby_directory
-from mdf_matio.validator import Validator
+from mdf_matio.validator import MDFValidator
 from mdf_toolbox import dict_merge
 from typing import Iterable, Set, List
 from functools import reduce, partial
@@ -151,7 +151,7 @@ def generate_search_index(data_url: str, validate_records=True, parse_config=Non
 
     # Validate metadata and tweak into final MDF feedstock format
     # Will fail if any entry fails validation - no invalid entries can be allowed
-    vald = Validator(schema_branch=schema_branch)
+    vald = MDFValidator(schema_branch=schema_branch)
     vald_gen = vald.validate_mdf_dataset(dataset_metadata, validation_params)
     # Yield validated dataset entry
     yield next(vald_gen)
