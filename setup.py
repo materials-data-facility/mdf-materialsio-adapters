@@ -11,17 +11,22 @@ setup(
     name="mdf_matio",
     version=version,
     packages=find_packages(),
-    install_requires=['pypif_sdk', 'jmespath>=0.9.4', 'jsonschema>3'],
+    install_requires=['pypif_sdk', 'jsonschema>3', 'mdf_toolbox>=0.5.3'],
     include_package_data=True,
     entry_points={
         'materialsio.adapter': [
             'dft = mdf_matio.adapters.citrine:PIFDFTAdapter',
-            'generic = mdf_matio.adapters:FileAdapter',
+            # 'generic = mdf_matio.adapters.file:FileAdapter',
             'csv = mdf_matio.adapters.mappable:CSVAdapter',
-            'json = mdf_matio.adapters.mappable:JSONAdapter',
-        ],
-        'materialsio.parser': [
-            'json = mdf_matio.parsers.json:JSONParser'
+            'crystal_structure = mdf_matio.adapters.basic_adapters:CrystalStructureAdapter',
+            'electron_microscopy = mdf_matio.adapters.basic_adapters:ElectronMicroscopyAdapter',
+            'generic = mdf_matio.adapters.basic_adapters:GenericFileAdapter',
+            'filename = mdf_matio.adapters.basic_adapters:FilenameAdapter',
+            'image = mdf_matio.adapters.basic_adapters:ImageAdapter',
+            'json = mdf_matio.adapters.basic_adapters:JSONAdapter',
+            'tdb = mdf_matio.adapters.basic_adapters:TDBAdapter',
+            'xml = mdf_matio.adapters.basic_adapters:XMLAdapter',
+            'yaml = mdf_matio.adapters.basic_adapters:YAMLAdapter'
         ]
     }
 )
