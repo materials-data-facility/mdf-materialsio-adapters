@@ -331,7 +331,7 @@ class MDFValidator():
 
             rc_md["material"]["elements"] = list_of_elem
         elif rc_md["material"].get("elemental_proportions"):
-            rc_md["material"]["elements"] = [rc_md["material"]["elemental_proportions"].keys()]
+            rc_md["material"]["elements"] = list(rc_md["material"]["elemental_proportions"].keys())
             rc_md["material"]["elements"].sort()
 
         # BLOCK: custom
