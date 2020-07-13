@@ -116,7 +116,8 @@ def generate_search_index(data_url: str, validate_records=True, parse_config=Non
     Yields:
         (dict): Metadata records ready for ingestion in MDF search index
     """
-
+    if parse_config is None:
+        parse_config = {}
     # Get the list of parsers that have adapters defined in this package
     target_parsers = get_mdf_parsers()
     logging.info(f'Detected {len(target_parsers)} parsers: {target_parsers}')
