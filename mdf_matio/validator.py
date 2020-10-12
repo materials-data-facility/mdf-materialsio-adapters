@@ -66,7 +66,7 @@ class MDFValidator():
         self.__scroll_id = None
         self.__ingest_date = datetime.utcnow().isoformat("T") + "Z"
         self.__indexed_files = []
-        self.ref_resolver = jsonschema.RefResolver("https://raw.githubusercontent.com/materials-"
+        #self.ref_resolver = jsonschema.RefResolver("https://raw.githubusercontent.com/materials-"
                                                    "data-facility/data-schemas/{}/schemas/"
                                                    .format(schema_branch), None)
 
