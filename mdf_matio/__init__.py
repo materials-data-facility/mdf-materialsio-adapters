@@ -4,7 +4,7 @@ from mdf_matio.version import __version__  # noqa: F401
 from materials_io.utils.interface import (get_available_adapters, ParseResult,
                                           get_available_parsers, run_all_parsers_on_group)
 from mdf_matio.grouping import groupby_file, groupby_directory
-from mdf_matio.validator import MDFValidator
+# from mdf_matio.validator import MDFValidator
 from mdf_toolbox import dict_merge
 from typing import Iterable, Set, List
 from functools import reduce, partial
@@ -98,10 +98,10 @@ def _merge_directories(parse_results: Iterable[ParseResult], dirs_to_group: List
     for group in groupby_directory(flagged_records):
         yield _merge_records(group)
 
-
+"""
 def generate_search_index(data_url: str, validate_records=True, parse_config=None,
                           exclude_parsers=None, index_options=None) -> Iterable[dict]:
-    """Generate a search index from a directory of data
+    '''Generate a search index from a directory of data
 
     Args:
         data_url (str): Location of dataset to be parsed
@@ -115,7 +115,7 @@ def generate_search_index(data_url: str, validate_records=True, parse_config=Non
         index_options (dict): Indexing options used by MDF Connect
     Yields:
         (dict): Metadata records ready for ingestion in MDF search index
-    """
+    '''
     if parse_config is None:
         parse_config = {}
     # Get the list of parsers that have adapters defined in this package
@@ -172,3 +172,5 @@ def generate_search_index(data_url: str, validate_records=True, parse_config=Non
             yield vald_gen.send(record)
 
     vald_gen.send(None)
+
+"""
