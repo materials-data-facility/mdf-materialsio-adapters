@@ -67,8 +67,8 @@ class MDFValidator():
         self.__ingest_date = datetime.utcnow().isoformat("T") + "Z"
         self.__indexed_files = []
         #self.ref_resolver = jsonschema.RefResolver("https://raw.githubusercontent.com/materials-"
-                                                   "data-facility/data-schemas/{}/schemas/"
-                                                   .format(schema_branch), None)
+        #                                           "data-facility/data-schemas/{}/schemas/"
+        #                                           .format(schema_branch), None)
 
     def validate_mdf_dataset(self, ds_md, validation_info=None):
         """Begin validating a new dataset against the MDF schema.
