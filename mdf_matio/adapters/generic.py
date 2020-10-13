@@ -37,6 +37,8 @@ class GenericMDFAdapter(BaseAdapter):
             schema_uri supercedes schema_branch - if schema_uri is specified,
             schema_branch is ignored.
         """
+
+        schema_uri = '/data-schemas/schemas/'
         if schema_uri:
             schema_branch = None
 
